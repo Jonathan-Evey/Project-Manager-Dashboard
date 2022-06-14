@@ -1,0 +1,58 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: darkgrey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mockup-container {
+    width: 750px;
+}
+
+h2 {
+    padding-bottom: 1rem;
+}
+
+.project-mockup {
+    margin: 5rem 0;
+    position: relative;
+    width: 50%;
+    background-color: beige;
+    padding: 1.5rem 2rem 1.5rem 2.5rem;
+    border-radius: 25px 25px 25px 25%;
+    box-shadow: inset 0.5em 0 rgba(255, 0, 0, 0.5);
+}
+
+button {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    right: 1.5rem;
+}
+
+.deadline {
+    padding-top: 1em;
+    text-align: right;
+}
+
+
+.project-details {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.todo-details div {
+    margin-top: 0.5rem;
+}
+.todo-details-two {
+    padding-top: 1rem;
+    display: flex;
+    justify-content: space-evenly;
+}
