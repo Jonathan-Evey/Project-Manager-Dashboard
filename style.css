@@ -1,95 +1,19 @@
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-body {
-    position: relative;
-    display: grid;
-    grid-template-rows: 125px 1fr;
-}
-
-
-header {
-    margin-left: 250px;
-    background-color: burlywood;
-}
-
-.header-container {
-    margin: 0 auto;
-    height: 100%;
-    width: 92.5%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-main {
-    padding-left: 250px;
-    background-color: darkgray;
-    height: 200vh;
-}
-
-.main-container {
-    padding: 2rem 1.5rem;
-}
-
-aside {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 250px;
-    height: 100vh;
-    background-color: blanchedalmond;
-}
-
-.main-nav {
+.new-project-form {
     display: flex;
     flex-direction: column;
 }
 
-.title-container {
+.priority-fieldset {
     display: flex;
-    align-self: center;
-    padding: 3rem 0 6rem 0;
+    flex-direction: row;
 }
 
-.title-container h1 {
-    margin-left: 1em;
-}
-
-.nav-bar-logo {
-    height: 25px;
-    width: 25px;
-    background-color: aquamarine;
-}
-
-.main-nav h4 {
-    padding: 0 0 0.5rem 1.75rem 
-}
-
-.main-nav ul:nth-child(2){
-    margin-bottom: 5rem;
-}
-
-.main-nav ul {
-    margin-bottom: 3rem;
-}
-
-.main-nav li {
+.projects-list-header,
+.project-card {
     display: flex;
-    align-items: center;
-    justify-content: left;
-    padding: 0.25rem 0 0.25rem 0;
-    padding-left: 1.75rem;
 }
 
-.main-nav li span {
-    margin-left: 1rem;
-}
-
-.main-nav li:hover {
-    cursor: pointer;
-    background-color: aqua;
+.projects-list-header {
+    align-items: stretch;
+    justify-content: space-evenly;
 }

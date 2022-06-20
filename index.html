@@ -5,66 +5,68 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <script src="./dist/runtime.bundle.js"></script>
+    <title>Todo Lists</title>
 </head>
 <body>
-<header>
-    <div class="header-container">
-        <div class="">
-            <button>+ Project</button>
-            <button>+ Task</button>
-            <button>+ Note</button>
-        </div>
-        <div>
-            <p>Welcome back,</p>
-            <p>Guest</p>
-        </div>
-    </div>
-</header>
+    <script src="./dist/index.bundle.js" defer></script>
     
-<main>
-    <div class="main-container">
-        <h2>My Projects</h2>
+    <button id="open-project-modal-btn">+ Project</button>
 
+    <div class="projects-list-header">
+        <p>Title</p>
+        <p>Description</p>
+        <p>Open Tasks</p>
+        <p>Priority Level</p>
+        <p>Due Date</p>
     </div>
-</main>
 
-<aside>
-    <div class="main-nav">
-        <div class="title-container">
-            <div class="nav-bar-logo"></div>
-            <h1>Dashboard</h1>
-        </div>
-
-        <h4>Sort By</h4>
-        <ul>
-            <li><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-                <span>Projects</span></li>
-            <li><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-                <span>Task Tracking</span></li>
-            <li><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bookmark"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
-                <span>My Notes</span></li>
-        </ul>
-
-        <ul>
-            <li><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                <span>Today</span></li>
-            <li><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-right"><line x1="7" y1="7" x2="17" y2="17"></line><polyline points="17 7 17 17 7 17"></polyline></svg>
-                <span>Tomorow</span></li>
-            <li><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
-                <span>Next 7 Days</span></li>
-            <li><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-down"><polyline points="7 13 12 18 17 13"></polyline><polyline points="7 6 12 11 17 6"></polyline></svg>
-                <span>All</span></li>
-        </ul>
-
-        <ul>
-            <li><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                <span>Urgent</span></li>
-            <li><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-coffee"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
-                <span>No Rush</span></li>
-        </ul>
+    <div class="project-card">
+        <h2>title</h2>
+        <p>description</p>
+        <P>Tasks left to complete: #</P>
+        <p>priority</p>
+        <p>07/01/22</p>
     </div>
-</aside>
+
+
+    <dialog class="add-new-project-modal" id="add-new-project-modal">
+        <form class="new-project-form">
+            <label for="project_title">Project Name:</label>
+            <input type="text" name="title" id="project_title" placeholder="Test Project">
+
+            <label for="project_description">Project Description:</label>
+            <textarea type="text" name="description" id="project_description" placeholder="Detailed project infromation..."></textarea>
+
+            <label for="due_date">Complete by:</label>
+            <input type="date" name="dueDate" id="due_date">
+
+            <fieldset class="priority-fieldset">
+                <legend>Project Urgency</legend>
+                <div>
+                    <input checked type="radio" name="priority" id="none" value="none" checked>
+                    <label for="none">None</label>
+                </div>
+                <div>
+                    <input type="radio" name="priority" id="low" value="low">
+                    <label for="low">Low</label>
+                </div>
+                <div>
+                    <input type="radio" name="priority" id="mid" value="mid">
+                    <label for="mid">Mid</label>
+                </div>
+                <div>
+                    <input type="radio" name="priority" id="high" value="high">
+                    <label for="high">High</label>
+                </div>
+                <div>
+                    <input type="radio" name="priority" id="urgent" value="urgent">
+                    <label for="urgent">Urgent</label>
+                </div>
+            </fieldset>
+            <button type="submit" id="save-project">Save Project</button>
+        </form>
+    </dialog>
     
 </body>
 </html>
