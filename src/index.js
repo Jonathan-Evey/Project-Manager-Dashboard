@@ -2,9 +2,14 @@ import _ from 'lodash';
 
 import myProjects from './script.js'
 
-const render = (function() {
+const javaScriptRunFunction = (function() {
+  
   
   myProjects
+
+  myProjects.renderProjects();
+  
+
 })();
 
-render
+javaScriptRunFunction
