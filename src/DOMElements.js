@@ -1,5 +1,10 @@
 const findDOMElements = (function() {
 
+    const HTML_ANCHORS = {
+        projectCardContainer: document.getElementById('project-card-container'),
+    }
+
+
     const newProjectModal = {
         
         openModalBtn: document.getElementById('open-project-modal-btn'),
@@ -15,8 +20,10 @@ const findDOMElements = (function() {
     };
 
     return {
+        HTML_ANCHORS,
         newProjectModal,
-    } 
+    }
+     
 })();
 
 
