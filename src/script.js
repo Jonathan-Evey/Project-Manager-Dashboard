@@ -3,13 +3,14 @@ import findDOMElements from './DOMElements.js'
 /*Your todo list should have projects or separate lists of todos. When a user first opens the app, there should be some sort of ‘default’ project to which all of their todos are put. Users should be able to create new projects and choose which project their todos go into. */
 const myProjects = (function () {
     
+    let projectCardContainer = findDOMElements.HTML_ANCHORS.projectCardContainer
     let newProjectModal = findDOMElements.newProjectModal
 
     let projects = [
         {
             id: "", //pull time stamp to make a uniqe id
-            title: "", //user input from html form
-            description: "", //user input from html form
+            title: "Test Project", //user input from html form
+            description: "A description of the test", //user input from html form
             checklist: [
                 {
                     id: "", //pull time stamp to make a uniqer id
@@ -33,6 +34,11 @@ const myProjects = (function () {
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
+    ///// event listeners and form interactions for adding a project ///////
+    ////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
     newProjectModal.openModalBtn.addEventListener('click', () => {
         return newProjectModal.theModal.showModal();
     })
@@ -42,13 +48,14 @@ const myProjects = (function () {
     })
     
     newProjectModal.saveBtn.addEventListener('click', () => {
-        formInputToProjects();
+        pushFormInputToProjects();
         console.log(projects);
         //render();
         return
     })
 
-    function formInputToProjects() {
+    //---on form submit btn event - takes input value and pushes to projects array
+    function pushFormInputToProjects() {
         let newProjectTitle = newProjectModal.titleInput.value;
         if (newProjectTitle === null || newProjectTitle === '') {
             return
@@ -65,7 +72,7 @@ const myProjects = (function () {
         resetForm();
         return
     }
-
+    //---- resets project form to defalut
     function resetForm() {
         newProjectModal.titleInput.value = null;
         newProjectModal.descriptionInput.value = null;
@@ -73,6 +80,56 @@ const myProjects = (function () {
         let defaultPriority = document.getElementById('none');
         defaultPriority.checked = true
         newProjectModal.theModal.close();
+        return
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
+    ///// event listeners and form interactions for adding a project ///////
+    ////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
+
+
+    function renderProjects() {
+        projects.forEach(project => {
+            let projectCardDiv = document.createElement('div');
+            projectCardDiv.classList.add('project-card');
+
+            projectCardContainer.appendChild(projectCardDiv);
+            
+            let projectCardTitle = document.createElement('h3');
+            projectCardTitle.innerText = project.title;
+
+            projectCardDiv.appendChild(projectCardTitle);
+
+            let projectCardDescription = document.createElement('p');
+            projectCardDescription.innerText = project.description;
+
+            projectCardDiv.appendChild(projectCardDescription);
+
+            let projectCardChecklist = document.createElement('p');
+            if (project.checklist.length === 0) {
+                projectCardChecklist.innerText = 0;
+            } else {
+                projectCardChecklist.innerText = project.checklist.length;
+            }
+
+            projectCardDiv.appendChild(projectCardChecklist)
+
+            let projectCardPriority = document.createElement('p');
+            projectCardPriority.innerText = project.priority;
+
+            projectCardDiv.appendChild(projectCardPriority)
+
+            let projectCardDueDate = document.createElement('p');
+            projectCardDueDate.innerText = project.dueDate;
+            
+            projectCardDiv.appendChild(projectCardDueDate)
+        })
+    }
+    return {
+        projects,
+        renderProjects,
     }
 
 })();
