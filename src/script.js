@@ -11,7 +11,7 @@ const myProjects = (function () {
         {
             id: "123456789", //pull time stamp to make a uniqe id
             title: "Test Project", //user input from html form
-            description: "A description of the test", //user input from html form
+            description: "A description of the project", //user input from html form
             checklist: [
                 {
                     id: "", //pull time stamp to make a uniqer id
@@ -25,11 +25,16 @@ const myProjects = (function () {
         {
             id: "564654987", //pull time stamp to make a uniqe id
             title: "Test Project", //user input from html form
-            description: "A description of the test", //user input from html form
+            description: "A description of the project", //user input from html form
             checklist: [
                 {
                     id: "", //pull time stamp to make a uniqer id
-                    taskDetails: "", //user input from a html form
+                    taskDetails: "some sample text", //user input from a html form
+                    complete: false, // user click to toggle 
+                },
+                {
+                    id: "", //pull time stamp to make a uniqer id
+                    taskDetails: "some more sample text", //user input from a html form
                     complete: false, // user click to toggle 
                 }
             ],
@@ -128,7 +133,7 @@ const myProjects = (function () {
         projectHeaderTaskCount.innerText = "Open Tasks";
         projectsHeader.appendChild(projectHeaderTaskCount)
         let projectPriority = document.createElement('p');
-        projectPriority.innerText = "Priority Level";
+        projectPriority.innerText = "Priority";
         projectsHeader.appendChild(projectPriority)
         let projectDueDate = document.createElement('p');
         projectDueDate.innerText = "Due Date";
@@ -142,30 +147,26 @@ const myProjects = (function () {
             projectCardDiv.classList.add('project-card');
             projectCardDiv.dataset.projectId = project.id;
             projectCardContainer.appendChild(projectCardDiv);
-
-            let projectCardTextContainer = document.createElement('div');
-            projectCardTextContainer.classList.add('project-card-text-container');
-            projectCardDiv.appendChild(projectCardTextContainer);
             
             let projectCardTitle = document.createElement('h3');
             projectCardTitle.innerText = project.title;
-            projectCardTextContainer.appendChild(projectCardTitle);
+            projectCardDiv.appendChild(projectCardTitle);
 
             let projectCardDescription = document.createElement('p');
             projectCardDescription.innerText = project.description;
-            projectCardTextContainer.appendChild(projectCardDescription);
+            projectCardDiv.appendChild(projectCardDescription);
 
             let projectCardChecklist = document.createElement('p');
             projectCardChecklist.innerText = project.checklist.length;
-            projectCardTextContainer.appendChild(projectCardChecklist)
+            projectCardDiv.appendChild(projectCardChecklist)
 
             let projectCardPriority = document.createElement('p');
             projectCardPriority.innerText = project.priority;
-            projectCardTextContainer.appendChild(projectCardPriority)
+            projectCardDiv.appendChild(projectCardPriority)
 
             let projectCardDueDate = document.createElement('p');
             projectCardDueDate.innerText = project.dueDate;
-            projectCardTextContainer.appendChild(projectCardDueDate)
+            projectCardDiv.appendChild(projectCardDueDate)
 
             ///////////////Create Edit and Delete Projects Buttons//////////
             let projectBtnContainer = document.createElement('div');
@@ -195,9 +196,23 @@ const myProjects = (function () {
             selectedProjectTitle.innerText = project.title;
             selectedProjectCard.appendChild(selectedProjectTitle);
 
+            let selectedProjectPriority = document.createElement('p');
+            selectedProjectPriority.innerText = "Project Priority: " + project.priority;
+            selectedProjectCard.appendChild(selectedProjectPriority);
+
+            let selectedProjectDueDate = document.createElement('p');
+            selectedProjectDueDate.innerText = "Due by: " + project.dueDate;
+            selectedProjectCard.appendChild(selectedProjectDueDate);
+
             let selectedProjectCardDescription = document.createElement('p');
             selectedProjectCardDescription.innerText = project.description;
             selectedProjectCard.appendChild(selectedProjectCardDescription);
+            
+            project.checklist.forEach(task => {
+                let selectedProjectChecklist = document.createElement('div');
+                selectedProjectChecklist.innerText = task.taskDetails;
+                selectedProjectCard.appendChild(selectedProjectChecklist)
+            })
         })
 
     }
