@@ -1,6 +1,7 @@
 const findDOMElements = (function() {
 
     const HTML_ANCHORS = {
+        projectsHeader: document.getElementById('projects-list-header'),
         projectCardContainer: document.getElementById('project-card-container'),
     }
 

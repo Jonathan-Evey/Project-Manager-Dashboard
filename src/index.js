@@ -4,10 +4,13 @@ import myProjects from './script.js'
 
 const javaScriptRunFunction = (function() {
   
-  
-  myProjects
+
+  myProjects.renderProjectsHeader();
 
   myProjects.renderProjects();
+
+
+  myProjects.projectCardEventListeners();
   
 
 })();
