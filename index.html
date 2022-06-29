@@ -10,12 +10,26 @@
 </head>
 <body>
     <script src="./dist/index.bundle.js" defer></script>
+
+    <header>
+        <div class="header-title-container">
+            <h1>Project</h1>
+            <h2>Manager</h2>
+        </div>
+    </header>
     
-    <button id="open-project-modal-btn">+ Project</button>
 
-    <div class="projects-list-header" id="projects-list-header"></div>
-    <div id="project-card-container"></div>
+    <main>
+        <aside class="side-bar-menu">
+            <button id="open-project-modal-btn">+ Project</button>
+        </aside>
+        <section>
+            <div class="projects-list-header" id="projects-list-header"></div>
+            <div id="project-card-container"></div>
+        </section>
 
+
+    </main>
 
     <dialog class="add-new-project-modal" id="add-new-project-modal">
         <form class="new-project-form">
