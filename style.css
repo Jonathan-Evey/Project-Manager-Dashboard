@@ -9,8 +9,18 @@
 }
 
 .projects-list-header,
-.project-card {
+.project-card,
+.project-card-text-container {
     display: flex;
+}
+
+.project-card {
+    background-color: aquamarine;
+    justify-content: space-between;
+}
+
+.project-card:hover {
+    background-color: bisque;
 }
 
 .projects-list-header {
