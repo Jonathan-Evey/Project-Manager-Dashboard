@@ -133,7 +133,8 @@ section {
     color: var(--clr-lightest);
 }
 
-.project-card:hover .delete-project-btn:hover {
+.project-card:hover .delete-project-btn:hover,
+.delete-task-btn:hover {
     color: crimson;
 }
 
@@ -143,6 +144,7 @@ section {
     grid-template-areas: 
         "header header header header"
         "aside container container container";
+    margin: 0 0.5rem;
     color: var(--clr-white);
     box-shadow: 2px 4px 10px -3px rgba(0, 0, 0, 0.35),
                 2px 4px  10px -5px rgba(0, 0, 0, 0.5),
@@ -151,6 +153,10 @@ section {
 
 .selected-project-header {
     grid-area: header;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
     background-color: var(--clr-darkest);
     box-shadow: 2px 4px 10px -4px rgba(0, 0, 0, 0.25),
                 2px 4px  10px -6px rgba(0, 0, 0, 0.4),
@@ -158,13 +164,33 @@ section {
     z-index: 1;
 }
 
+.close-project-btn {
+    background: none;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--clr-white);
+    border: none;
+}
+
+.close-project-btn:hover {
+    cursor: pointer;
+    color: var(--clr-light);
+}
+
 .selected-project-aside {
     grid-area: aside;
+    padding: 0.75rem 1rem;
     background-color: var(--clr-dark);
     box-shadow: 4px -2px 10px -6px rgba(0, 0, 0, 0.25),
                 4px -2px  10px -8px rgba(0, 0, 0, 0.4),
                 4px -2px  10px -10px rgba(0, 0, 0, 0.65);
     z-index: 1;
+}
+
+.project-deadline-container {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 1rem;
 }
 
 .selected-project-task-container {
@@ -176,18 +202,67 @@ section {
 
 .task-card {
     display: flex;
-    padding: 0.25rem 1rem;
-    margin-bottom: 0.75rem;
+    flex-direction: column;
+    padding: 0.5rem 1rem .6rem 1rem;
+    margin-bottom: 1rem;
     background-color: var(--clr-dark);
+    color: var(--clr-white);
     border-radius: 2px 2px 2px 20px;
     box-shadow: 2px 4px 8px -3px rgba(0, 0, 0, 0.3),
                 2px 4px  8px -5px rgba(0, 0, 0, 0.45),
                 2px 4px  8px -8px rgba(0, 0, 0, 0.7);
 }
 
-.task-card p {
+.task-filter-card {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    padding: 0 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.task-filter-card button {
+    background: none;
+    border: none;
+    font-size: .9rem;
+    font-weight: 700;
+    padding: 0.25rem 0.5rem;
+}
+
+.task-filter-card button:hover {
+    cursor: pointer;
     color: var(--clr-white);
-    padding-left: .5rem;
+}
+
+.filter-tasks-btn-container,
+.task-options-container,
+.task-checkbox-conatiner {
+    display: flex;
+    align-items: center;
+}
+
+.task-options-container {
+    justify-content: space-between;
+}
+
+.task-checkbox-conatiner p {
+    margin-left: 0.5rem;
+}
+
+.delete-task-btn {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    padding: 0.25rem 0.5rem;
+    color: var(--clr-white);
+}
+
+.delete-task-btn:hover {
+    cursor: pointer;
+}
+
+.filter-tasks-btn-container p {
+    margin-right: 0.5rem;
 }
 
 /*-------Add Project Form-------*/
