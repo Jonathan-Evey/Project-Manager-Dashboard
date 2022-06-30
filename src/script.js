@@ -10,7 +10,7 @@ const myProjects = (function () {
     let projects = [
         {
             id: "123456789", //pull time stamp to make a uniqe id
-            title: "Test Project", //user input from html form
+            title: "Project With a Cool Name", //user input from html form
             description: "A description of the project", //user input from html form
             checklist: [
                 {
@@ -23,9 +23,33 @@ const myProjects = (function () {
             priority: "High", // user input (maybe do a background color gradiant to show priority level. also make a sort function to show tasks in that priority range)
         },
         {
-            id: "564654987", //pull time stamp to make a uniqe id
-            title: "Test Project", //user input from html form
+            id: "123456789", //pull time stamp to make a uniqe id
+            title: "Project With a Cool Name", //user input from html form
             description: "A description of the project", //user input from html form
+            checklist: [
+                {
+                    id: "", //pull time stamp to make a uniqer id
+                    taskDetails: "", //user input from a html form
+                    complete: false, // user click to toggle 
+                },
+                {
+                    id: "", //pull time stamp to make a uniqer id
+                    taskDetails: "", //user input from a html form
+                    complete: false, // user click to toggle 
+                },
+                {
+                    id: "", //pull time stamp to make a uniqer id
+                    taskDetails: "", //user input from a html form
+                    complete: false, // user click to toggle 
+                }
+            ],
+            dueDate: "07/01/22", // user input
+            priority: "High", // user input (maybe do a background color gradiant to show priority level. also make a sort function to show tasks in that priority range)
+        },
+        {
+            id: "564654987", //pull time stamp to make a uniqe id
+            title: "Meh Project", //user input from html form
+            description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, iure perferendis ipsam possimus ipsum, amet id quas corrupti eum nam illum qui recusandae minus cupiditate assumenda in reprehenderit? Asperiores quos possimus eveniet voluptates ipsa aperiam nemo excepturi dignissimos accusamus distinctio?", //user input from html form
             checklist: [
                 {
                     id: "", //pull time stamp to make a uniqer id
@@ -39,9 +63,11 @@ const myProjects = (function () {
                 }
             ],
             dueDate: "07/01/22", // user input
-            priority: "High", // user input (maybe do a background color gradiant to show priority level. also make a sort function to show tasks in that priority range)
+            priority: "Low", // user input (maybe do a background color gradiant to show priority level. also make a sort function to show tasks in that priority range)
         }
-    ]
+    ];
+
+    let sortedProjects = projects
 
     let selectedProject = []
 
@@ -112,6 +138,14 @@ const myProjects = (function () {
             if (e.target.classList.contains('open-project-modal-btn')) {
                 return newProjectModal.theModal.showModal();
             }
+            if (e.target.classList.contains('sort-by-most-btn')) {
+                sortByMostTaks();
+                render();
+            }
+            if (e.target.classList.contains('sort-by-least-btn')) {
+                sortByLeastTaks();
+                render();
+            }
         })
     }
 
@@ -169,9 +203,11 @@ const myProjects = (function () {
         projectHeaderTaskCount.innerText = "Tasks:";
         sortByTasksContainer.appendChild(projectHeaderTaskCount);
         let projectSortByMostTasksBtn = document.createElement('button');
+        projectSortByMostTasksBtn.classList.add('sort-by-most-btn')
         projectSortByMostTasksBtn.innerText = "Most";
         sortByTasksContainer.appendChild(projectSortByMostTasksBtn);
         let projectSortByLeastTasksBtn = document.createElement('button');
+        projectSortByLeastTasksBtn.classList.add('sort-by-least-btn')
         projectSortByLeastTasksBtn.innerText = "Least";
         sortByTasksContainer.appendChild(projectSortByLeastTasksBtn);
 
@@ -208,7 +244,7 @@ const myProjects = (function () {
     }
     //---Makes the list of projects
     function renderProjects() {
-        projects.forEach(project => {
+        sortedProjects.forEach(project => {
             ///////////////////Creates Cards for Each Project//////////////
             let projectCardDiv = document.createElement('div');
             projectCardDiv.classList.add('project-card');
@@ -359,6 +395,32 @@ const myProjects = (function () {
         })
 
     }
+
+
+    ////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
+    /////////////////////// Sort  functions ////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
+    //---Sort Projects
+    function sortByMostTaks() {
+        let projectsByMostTasks = projects;
+        projectsByMostTasks.sort(function(a, b) {
+            return b.checklist.length - a.checklist.length
+        });
+        sortedProjects = projectsByMostTasks
+        return
+    }
+
+    function sortByLeastTaks() {
+        let projectsByLeastTasks = projects;
+        projectsByLeastTasks.sort(function(a, b) {
+            return a.checklist.length - b.checklist.length
+        });
+        sortedProjects = projectsByLeastTasks
+        return
+    }
+
 
     return {
         
