@@ -204,21 +204,27 @@ const myProjects = (function () {
 
             let closeProjectBtn = document.createElement('button');
             closeProjectBtn.classList.add('close-project-btn');
+            closeProjectBtn.innerText = "Back to Project List"
             selectedProjectHeader.appendChild(closeProjectBtn);
 
             let selectedProjectAside = document.createElement('div');
             selectedProjectAside.classList.add('selected-project-aside');
             selectedProjectCard.appendChild(selectedProjectAside);
 
-            let selectedProjectPriority = document.createElement('p');
-            selectedProjectPriority.innerText = "Project Priority: " + project.priority;
-            selectedProjectAside.appendChild(selectedProjectPriority);
+            let projectDeadlineContainer = document.createElement('div');
+            projectDeadlineContainer.classList.add('project-deadline-container');
+            selectedProjectAside.appendChild(projectDeadlineContainer);
 
             let selectedProjectDueDate = document.createElement('p');
-            selectedProjectDueDate.innerText = "Due by: " + project.dueDate;
-            selectedProjectAside.appendChild(selectedProjectDueDate);
+            selectedProjectDueDate.innerText = "Due: " + project.dueDate;
+            projectDeadlineContainer.appendChild(selectedProjectDueDate);
+
+            let selectedProjectPriority = document.createElement('p');
+            selectedProjectPriority.innerText = "Priority: " + project.priority;
+            projectDeadlineContainer.appendChild(selectedProjectPriority);
 
             let selectedProjectCardDescription = document.createElement('p');
+            selectedProjectCardDescription.classList.add('project-description');
             selectedProjectCardDescription.innerText = project.description;
             selectedProjectAside.appendChild(selectedProjectCardDescription);
             
@@ -226,17 +232,66 @@ const myProjects = (function () {
             selectedProjectTaskContainer.classList.add('selected-project-task-container');
             selectedProjectCard.appendChild(selectedProjectTaskContainer);
 
+            //---filter and add tasks to task list
+            let selectedProjectChecklistFilter = document.createElement('div');
+            selectedProjectChecklistFilter.classList.add('task-filter-card');
+
+            let filterTasksBtnContainer = document.createElement('div');
+            filterTasksBtnContainer.classList.add('filter-tasks-btn-container')
+            selectedProjectChecklistFilter.appendChild(filterTasksBtnContainer);
+
+            let filterTasksLable = document.createElement('p');
+            filterTasksLable.innerText = "Filter Tasks:"
+            filterTasksBtnContainer.appendChild(filterTasksLable);
+
+            let allTasksBtn = document.createElement('button');
+            allTasksBtn.innerText = "All"
+            filterTasksBtnContainer.appendChild(allTasksBtn);
+
+            let openTasksBtn = document.createElement('button');
+            openTasksBtn.innerText = "Open"
+            filterTasksBtnContainer.appendChild(openTasksBtn);
+
+            let closedTasksBtn = document.createElement('button');
+            closedTasksBtn.innerText = "Closed"
+            filterTasksBtnContainer.appendChild(closedTasksBtn);
+
+            let addNewTaskBtn = document.createElement('button');
+            addNewTaskBtn.innerText = "+ Task"
+            selectedProjectChecklistFilter.appendChild(addNewTaskBtn);
+
+            selectedProjectTaskContainer.appendChild(selectedProjectChecklistFilter);
+
+
             project.checklist.forEach(task => {
                 let selectedProjectChecklist = document.createElement('div');
                 selectedProjectChecklist.classList.add('task-card');
 
+                let taskOptionsContainer = document.createElement('div');
+                taskOptionsContainer.classList.add('task-options-container');
+                selectedProjectChecklist.appendChild(taskOptionsContainer);
+
+                let taskCheckboxConatiner = document.createElement('div');
+                taskCheckboxConatiner.classList.add('task-checkbox-conatiner');
+                taskOptionsContainer.appendChild(taskCheckboxConatiner)
+
                 let taskCheckBox = document.createElement('input');
                 taskCheckBox.type = "checkbox";
-                selectedProjectChecklist.appendChild(taskCheckBox);
-                
+                taskCheckboxConatiner.appendChild(taskCheckBox);
+
+                let checkboxDescription = document.createElement('p');
+                checkboxDescription.innerText = "Check Complete";
+                taskCheckboxConatiner.appendChild(checkboxDescription);
+
+                let deleteTaskBtn = document.createElement('button');
+                deleteTaskBtn.classList.add('delete-task-btn');
+                deleteTaskBtn.innerText = "Delete"
+                taskOptionsContainer.appendChild(deleteTaskBtn)
+
                 let taskText = document.createElement('p');
                 taskText.innerText = task.taskDetails;
                 selectedProjectChecklist.appendChild(taskText);
+
 
                 selectedProjectTaskContainer.appendChild(selectedProjectChecklist);
             })
@@ -262,6 +317,10 @@ const myProjects = (function () {
                 selectedProject = projects.filter(project => project.id === e.target.dataset.projectId);
                 console.log(selectedProject);
                 renderSelectedProject();
+            }
+            if (e.target.classList.contains('close-project-btn')) {
+                clearElements(projectCardContainer);
+                render();
             }
         })
     }
