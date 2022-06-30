@@ -60,6 +60,8 @@ section {
     padding: 1rem 0.75rem;
 }
 
+
+/*-------Project List Cards-------*/
 .projects-list-header,
 .project-card {
     display: grid;
@@ -69,6 +71,11 @@ section {
 .projects-list-header {
     font-weight: 700;
     padding: 0 0.75rem 0.5rem 0.75rem;
+}
+
+.project-card p,
+.project-card h3 {
+    pointer-events: none;
 }
 
 .project-card {
@@ -130,6 +137,63 @@ section {
     color: crimson;
 }
 
+/*-------Selected Project Card-------*/
+.selected-project-card {
+    display: grid;
+    grid-template-areas: 
+        "header header header header"
+        "aside container container container";
+    color: var(--clr-white);
+    box-shadow: 2px 4px 10px -3px rgba(0, 0, 0, 0.35),
+                2px 4px  10px -5px rgba(0, 0, 0, 0.5),
+                2px 4px  10px -8px rgba(0, 0, 0, 0.75);
+}
+
+.selected-project-header {
+    grid-area: header;
+    background-color: var(--clr-darkest);
+    box-shadow: 2px 4px 10px -4px rgba(0, 0, 0, 0.25),
+                2px 4px  10px -6px rgba(0, 0, 0, 0.4),
+                2px 4px  10px -9px rgba(0, 0, 0, 0.65);
+    z-index: 1;
+}
+
+.selected-project-aside {
+    grid-area: aside;
+    background-color: var(--clr-dark);
+    box-shadow: 4px -2px 10px -6px rgba(0, 0, 0, 0.25),
+                4px -2px  10px -8px rgba(0, 0, 0, 0.4),
+                4px -2px  10px -10px rgba(0, 0, 0, 0.65);
+    z-index: 1;
+}
+
+.selected-project-task-container {
+    grid-area: container;
+    padding: 1rem 0.75rem 0.25rem 0.75rem;
+    background-color: var(--clr-light);
+    color: var(--clr-black);
+}
+
+.task-card {
+    display: flex;
+    padding: 0.25rem 1rem;
+    margin-bottom: 0.75rem;
+    background-color: var(--clr-dark);
+    border-radius: 2px 2px 2px 20px;
+    box-shadow: 2px 4px 8px -3px rgba(0, 0, 0, 0.3),
+                2px 4px  8px -5px rgba(0, 0, 0, 0.45),
+                2px 4px  8px -8px rgba(0, 0, 0, 0.7);
+}
+
+.task-card p {
+    color: var(--clr-white);
+    padding-left: .5rem;
+}
+
+/*-------Add Project Form-------*/
+dialog {
+    margin: auto;
+}
 
 .new-project-form {
     display: flex;
