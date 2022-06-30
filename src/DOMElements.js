@@ -20,9 +20,20 @@ const findDOMElements = (function() {
         //////// radio input is found within submit event ///////////
     };
 
+    const newTaskModal = {
+        
+        openModalBtn: document.querySelector('.add-new-task-btn'),
+        theModal: document.getElementById('add-new-task-modal'),
+
+        //------------modal form inputs
+        taskDetailsInput: document.getElementById('task_details'),
+        saveBtn: document.getElementById('save-task'),
+    };
+
     return {
         HTML_ANCHORS,
         newProjectModal,
+        newTaskModal,
     }
      
 })();

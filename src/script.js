@@ -3,11 +3,15 @@ import findDOMElements from './DOMElements.js'
 /*Your todo list should have projects or separate lists of todos. When a user first opens the app, there should be some sort of ‘default’ project to which all of their todos are put. Users should be able to create new projects and choose which project their todos go into. */
 const myProjects = (function () {
     
+    const LOCAL_STORAGE_PROJECTS_KEY = 'myProjectManager.Project';
+    let projects = JSON.parse(localStorage.getItem(LOCAL_STORAGE_PROJECTS_KEY)) || [];
+
     let projectCardContainer = findDOMElements.HTML_ANCHORS.projectCardContainer
     let newProjectModal = findDOMElements.newProjectModal
+    let newTaskModal = findDOMElements.newTaskModal
     let projectsHeader = findDOMElements.HTML_ANCHORS.projectsHeader
 
-    let projects = [
+    /*let projects = [
         {
             id: "123456789", //pull time stamp to make a uniqe id
             title: "Project With a Cool Name", //user input from html form
@@ -65,10 +69,10 @@ const myProjects = (function () {
             dueDate: "07/01/22", // user input
             priority: "Low", // user input (maybe do a background color gradiant to show priority level. also make a sort function to show tasks in that priority range)
         }
-    ];
+    ]; */
 
     let sortedProjects = projects
-
+    
     let selectedProject = []
 
     const createProject = (title, description, dueDate, priority) => {
@@ -79,6 +83,14 @@ const myProjects = (function () {
             checklist: [],
             dueDate: dueDate,
             priority: priority,
+        }
+    }
+
+    const creatChecklist = (taskDetails) => {
+        return {
+            id: Date.now().toString(),
+            taskDetails: taskDetails,
+            complete: false,
         }
     }
 
@@ -113,17 +125,47 @@ const myProjects = (function () {
         let project = createProject(newProjectTitle, newProjectDescription, newProjectDueDate, newProjectPriority);
 
         projects.push(project);
-        resetForm();
+        resetProjectForm();
         return
     }
     //---- resets project form to defalut
-    function resetForm() {
+    function resetProjectForm() {
         newProjectModal.titleInput.value = null;
         newProjectModal.descriptionInput.value = null;
         newProjectModal.dueDateInput.value = null;
         let defaultPriority = document.getElementById('none');
         defaultPriority.checked = true
         newProjectModal.theModal.close();
+        return
+    }
+
+    newTaskModal.theModal.addEventListener('submit', (e) => {
+        e.preventDefault();
+    })
+    newTaskModal.saveBtn.addEventListener('click', () => {
+        pushFormInputToTasks();
+        resetTaskForm();
+        save();
+        clearElements(projectCardContainer);
+        clearElements(projectsHeader);
+        renderSelectedProject();
+        return
+    })
+    function pushFormInputToTasks() {
+        let newTaskDetails = newTaskModal.taskDetailsInput.value;
+        if (newTaskDetails === null || newTaskDetails === '') {
+            return
+        }
+        let task = creatChecklist(newTaskDetails);
+        let openModalBtnId = document.querySelector('.add-new-task-btn');
+        let currentProjectId = openModalBtnId.dataset.projectId;
+        let currentProject = projects.find(project => project.id === currentProjectId);
+        currentProject.checklist.push(task);
+        return
+    }
+    function resetTaskForm() {
+        newTaskModal.taskDetailsInput.value = null;
+        newTaskModal.theModal.close();
         return
     }
 
@@ -166,6 +208,9 @@ const myProjects = (function () {
                 clearElements(projectCardContainer);
                 render();
             }
+            if (e.target.classList.contains('add-new-task-btn')) {
+                return newTaskModal.theModal.showModal();
+            }
         })
     }
 
@@ -174,10 +219,14 @@ const myProjects = (function () {
     /////////////////// HTML render functions //////////////////////////////
     ////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////
+    function save() {
+        localStorage.setItem(LOCAL_STORAGE_PROJECTS_KEY, JSON.stringify(projects));
+    }
     function render() {
+        save();
         clearElements(projectCardContainer);
         clearElements(projectsHeader);
-        renderProjectsHeader()
+        renderProjectsHeader();
         renderProjects();
     }
     
@@ -354,6 +403,8 @@ const myProjects = (function () {
             filterTasksBtnContainer.appendChild(closedTasksBtn);
 
             let addNewTaskBtn = document.createElement('button');
+            addNewTaskBtn.dataset.projectId = project.id;
+            addNewTaskBtn.classList.add('add-new-task-btn');
             addNewTaskBtn.innerText = "+ Task"
             selectedProjectChecklistFilter.appendChild(addNewTaskBtn);
 
@@ -393,7 +444,6 @@ const myProjects = (function () {
                 selectedProjectTaskContainer.appendChild(selectedProjectChecklist);
             })
         })
-
     }
 
 
