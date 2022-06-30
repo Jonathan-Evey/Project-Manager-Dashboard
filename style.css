@@ -99,7 +99,7 @@ section {
 
 .project-card {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr) .75fr;
     align-items: center;
     padding: 0 0.75rem;
     margin-bottom: 1rem;
@@ -123,7 +123,7 @@ section {
 
 .project-btn-container {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-end;
 }
 
 .edit-project-btn,
