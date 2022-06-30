@@ -58,13 +58,9 @@ const myProjects = (function () {
 
     ////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////
-    ///// event listeners and form interactions for adding a project ///////
+    /////////////// form interactions for adding a project /////////////////
     ////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////
-    newProjectModal.openModalBtn.addEventListener('click', () => {
-        return newProjectModal.theModal.showModal();
-    })
-    
     newProjectModal.theModal.addEventListener('submit', (e) => {
         e.preventDefault();
     })
@@ -72,7 +68,7 @@ const myProjects = (function () {
     newProjectModal.saveBtn.addEventListener('click', () => {
         pushFormInputToProjects();
         console.log(projects);
-        //render();
+        render();
         return
     })
 
@@ -92,7 +88,6 @@ const myProjects = (function () {
 
         projects.push(project);
         resetForm();
-        render();
         return
     }
     //---- resets project form to defalut
@@ -104,6 +99,40 @@ const myProjects = (function () {
         defaultPriority.checked = true
         newProjectModal.theModal.close();
         return
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
+    ///////////////////////// Event listeners //////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
+
+    function projectHeaderEventListeners() {
+        projectsHeader.addEventListener('click', (e) => {
+            if (e.target.classList.contains('open-project-modal-btn')) {
+                return newProjectModal.theModal.showModal();
+            }
+        })
+    }
+
+    function projectCardEventListeners() {
+        projectCardContainer.addEventListener('click', (e) => {
+            if (e.target.classList.contains('delete-project-btn')) {
+                projects = projects.filter(project => project.id !== e.target.dataset.projectId);
+                render();
+            }
+            if (e.target.classList.contains('project-card')) {
+                clearElements(projectCardContainer);
+                clearElements(projectsHeader);
+                selectedProject = projects.filter(project => project.id === e.target.dataset.projectId);
+                console.log(selectedProject);
+                renderSelectedProject();
+            }
+            if (e.target.classList.contains('close-project-btn')) {
+                clearElements(projectCardContainer);
+                render();
+            }
+        })
     }
 
     ////////////////////////////////////////////////////////////////////////
@@ -125,21 +154,57 @@ const myProjects = (function () {
     }
     //---Makes the header over the list of projects
     function renderProjectsHeader() {
+        let projectHeaderSortContainer = document.createElement('div');
+        projectHeaderSortContainer.classList.add('project-header-sort-container')
+        projectsHeader.appendChild(projectHeaderSortContainer)
+
         let projectHeaderTitle = document.createElement('p');
-        projectHeaderTitle.innerText = "Title";
-        projectsHeader.appendChild(projectHeaderTitle)
-        let projectHeaderDescription = document.createElement('p');
-        projectHeaderDescription.innerText = "Description";
-        projectsHeader.appendChild(projectHeaderDescription)
+        projectHeaderTitle.innerText = "Sort Projects";
+        projectHeaderTitle.classList.add('sort-project-menu-title')
+        projectHeaderSortContainer.appendChild(projectHeaderTitle);
+
+        let sortByTasksContainer = document.createElement('div');
+        projectHeaderSortContainer.appendChild(sortByTasksContainer);
         let projectHeaderTaskCount = document.createElement('p');
-        projectHeaderTaskCount.innerText = "Open Tasks";
-        projectsHeader.appendChild(projectHeaderTaskCount)
+        projectHeaderTaskCount.innerText = "Tasks:";
+        sortByTasksContainer.appendChild(projectHeaderTaskCount);
+        let projectSortByMostTasksBtn = document.createElement('button');
+        projectSortByMostTasksBtn.innerText = "Most";
+        sortByTasksContainer.appendChild(projectSortByMostTasksBtn);
+        let projectSortByLeastTasksBtn = document.createElement('button');
+        projectSortByLeastTasksBtn.innerText = "Least";
+        sortByTasksContainer.appendChild(projectSortByLeastTasksBtn);
+
+        let sortByPriorityContainer = document.createElement('div');
+        projectHeaderSortContainer.appendChild(sortByPriorityContainer);
         let projectPriority = document.createElement('p');
-        projectPriority.innerText = "Priority";
-        projectsHeader.appendChild(projectPriority)
+        projectPriority.innerText = "Priority:";
+        sortByPriorityContainer.appendChild(projectPriority);
+        let projectSortByHighestPriorityBtn = document.createElement('button');
+        projectSortByHighestPriorityBtn.innerText = "Highest";
+        sortByPriorityContainer.appendChild(projectSortByHighestPriorityBtn);
+        let projectSortByLeastPriorityBtn = document.createElement('button');
+        projectSortByLeastPriorityBtn.innerText = "Least";
+        sortByPriorityContainer.appendChild(projectSortByLeastPriorityBtn);
+
+        let sortByDateContainer = document.createElement('div');
+        projectHeaderSortContainer.appendChild(sortByDateContainer);
         let projectDueDate = document.createElement('p');
-        projectDueDate.innerText = "Due Date";
-        projectsHeader.appendChild(projectDueDate)
+        projectDueDate.innerText = "Date:";
+        sortByDateContainer.appendChild(projectDueDate);
+        let projectSortByClosestDateBtn = document.createElement('button');
+        projectSortByClosestDateBtn.innerText = "Closest";
+        sortByDateContainer.appendChild(projectSortByClosestDateBtn);
+        let projectSortByFarthestDateBtn = document.createElement('button');
+        projectSortByFarthestDateBtn.innerText = "Farthest";
+        sortByDateContainer.appendChild(projectSortByFarthestDateBtn);
+
+        let openProjectModalBtn = document.createElement('button');
+        openProjectModalBtn.classList.add('open-project-modal-btn')
+        openProjectModalBtn.innerText = "+ Project";
+        projectsHeader.appendChild(openProjectModalBtn);
+        
+
     }
     //---Makes the list of projects
     function renderProjects() {
@@ -154,20 +219,16 @@ const myProjects = (function () {
             projectCardTitle.innerText = project.title;
             projectCardDiv.appendChild(projectCardTitle);
 
-            let projectCardDescription = document.createElement('p');
-            projectCardDescription.innerText = project.description;
-            projectCardDiv.appendChild(projectCardDescription);
-
             let projectCardChecklist = document.createElement('p');
-            projectCardChecklist.innerText = project.checklist.length;
+            projectCardChecklist.innerText = `Open Tasks: ${project.checklist.length}`;
             projectCardDiv.appendChild(projectCardChecklist)
 
             let projectCardPriority = document.createElement('p');
-            projectCardPriority.innerText = project.priority;
+            projectCardPriority.innerText = `Priority: ${project.priority}`;
             projectCardDiv.appendChild(projectCardPriority)
 
             let projectCardDueDate = document.createElement('p');
-            projectCardDueDate.innerText = project.dueDate;
+            projectCardDueDate.innerText = `Complete by: ${project.dueDate}`;
             projectCardDiv.appendChild(projectCardDueDate)
 
             ///////////////Create Edit and Delete Projects Buttons//////////
@@ -299,37 +360,12 @@ const myProjects = (function () {
 
     }
 
-    ////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////
-    //////////// Event listeners on project cards //////////////////////////
-    ////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////
-
-    function projectCardEventListeners() {
-        projectCardContainer.addEventListener('click', (e) => {
-            if (e.target.classList.contains('delete-project-btn')) {
-                projects = projects.filter(project => project.id !== e.target.dataset.projectId);
-                render();
-            }
-            if (e.target.classList.contains('project-card')) {
-                clearElements(projectCardContainer);
-                clearElements(projectsHeader);
-                selectedProject = projects.filter(project => project.id === e.target.dataset.projectId);
-                console.log(selectedProject);
-                renderSelectedProject();
-            }
-            if (e.target.classList.contains('close-project-btn')) {
-                clearElements(projectCardContainer);
-                render();
-            }
-        })
-    }
-
     return {
         
         renderProjectsHeader,
         renderProjects,
         renderSelectedProject,
+        projectHeaderEventListeners,
         projectCardEventListeners,
     }
 

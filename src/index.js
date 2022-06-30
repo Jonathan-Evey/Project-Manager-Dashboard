@@ -9,7 +9,7 @@ const javaScriptRunFunction = (function() {
 
   myProjects.renderProjects();
 
-
+  myProjects.projectHeaderEventListeners()
   myProjects.projectCardEventListeners();
   
 
