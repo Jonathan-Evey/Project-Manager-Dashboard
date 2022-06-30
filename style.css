@@ -165,8 +165,9 @@ section {
 .selected-project-card {
     display: grid;
     grid-template-areas: 
-        "header header header header"
-        "aside container container container";
+        "header header"
+        "aside container";
+    grid-template-columns: 35% 65%;
     margin: 0 0.5rem;
     color: var(--clr-white);
     box-shadow: 2px 4px 10px -3px rgba(0, 0, 0, 0.35),
