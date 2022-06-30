@@ -113,6 +113,8 @@ const myProjects = (function () {
     ////////////////////////////////////////////////////////////////////////
     function render() {
         clearElements(projectCardContainer);
+        clearElements(projectsHeader);
+        renderProjectsHeader()
         renderProjects();
     }
     
@@ -121,7 +123,7 @@ const myProjects = (function () {
             element.removeChild(element.firstChild);
         }
     }
-    
+    //---Makes the header over the list of projects
     function renderProjectsHeader() {
         let projectHeaderTitle = document.createElement('p');
         projectHeaderTitle.innerText = "Title";
@@ -139,7 +141,7 @@ const myProjects = (function () {
         projectDueDate.innerText = "Due Date";
         projectsHeader.appendChild(projectDueDate)
     }
-
+    //---Makes the list of projects
     function renderProjects() {
         projects.forEach(project => {
             ///////////////////Creates Cards for Each Project//////////////
@@ -185,33 +187,58 @@ const myProjects = (function () {
             projectBtnContainer.appendChild(deleteProjectBtn)
         })
     }
-
+    //---Makes the selected project full screen
     function renderSelectedProject() {
         selectedProject.forEach(project => {
             let selectedProjectCard = document.createElement('div');
             selectedProjectCard.classList.add('selected-project-card');
             projectCardContainer.appendChild(selectedProjectCard);
 
+            let selectedProjectHeader = document.createElement('div');
+            selectedProjectHeader.classList.add('selected-project-header');
+            selectedProjectCard.appendChild(selectedProjectHeader);
+
             let selectedProjectTitle = document.createElement('h3');
             selectedProjectTitle.innerText = project.title;
-            selectedProjectCard.appendChild(selectedProjectTitle);
+            selectedProjectHeader.appendChild(selectedProjectTitle);
+
+            let closeProjectBtn = document.createElement('button');
+            closeProjectBtn.classList.add('close-project-btn');
+            selectedProjectHeader.appendChild(closeProjectBtn);
+
+            let selectedProjectAside = document.createElement('div');
+            selectedProjectAside.classList.add('selected-project-aside');
+            selectedProjectCard.appendChild(selectedProjectAside);
 
             let selectedProjectPriority = document.createElement('p');
             selectedProjectPriority.innerText = "Project Priority: " + project.priority;
-            selectedProjectCard.appendChild(selectedProjectPriority);
+            selectedProjectAside.appendChild(selectedProjectPriority);
 
             let selectedProjectDueDate = document.createElement('p');
             selectedProjectDueDate.innerText = "Due by: " + project.dueDate;
-            selectedProjectCard.appendChild(selectedProjectDueDate);
+            selectedProjectAside.appendChild(selectedProjectDueDate);
 
             let selectedProjectCardDescription = document.createElement('p');
             selectedProjectCardDescription.innerText = project.description;
-            selectedProjectCard.appendChild(selectedProjectCardDescription);
+            selectedProjectAside.appendChild(selectedProjectCardDescription);
             
+            let selectedProjectTaskContainer = document.createElement('div');
+            selectedProjectTaskContainer.classList.add('selected-project-task-container');
+            selectedProjectCard.appendChild(selectedProjectTaskContainer);
+
             project.checklist.forEach(task => {
                 let selectedProjectChecklist = document.createElement('div');
-                selectedProjectChecklist.innerText = task.taskDetails;
-                selectedProjectCard.appendChild(selectedProjectChecklist)
+                selectedProjectChecklist.classList.add('task-card');
+
+                let taskCheckBox = document.createElement('input');
+                taskCheckBox.type = "checkbox";
+                selectedProjectChecklist.appendChild(taskCheckBox);
+                
+                let taskText = document.createElement('p');
+                taskText.innerText = task.taskDetails;
+                selectedProjectChecklist.appendChild(taskText);
+
+                selectedProjectTaskContainer.appendChild(selectedProjectChecklist);
             })
         })
 
