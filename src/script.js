@@ -161,6 +161,7 @@ const myProjects = (function () {
         let currentProjectId = openModalBtnId.dataset.projectId;
         let currentProject = projects.find(project => project.id === currentProjectId);
         currentProject.checklist.push(task);
+        console.log(projects);
         return
     }
     function resetTaskForm() {
@@ -198,8 +199,6 @@ const myProjects = (function () {
                 render();
             }
             if (e.target.classList.contains('project-card')) {
-                clearElements(projectCardContainer);
-                clearElements(projectsHeader);
                 selectedProject = projects.filter(project => project.id === e.target.dataset.projectId);
                 console.log(selectedProject);
                 renderSelectedProject();
@@ -210,6 +209,13 @@ const myProjects = (function () {
             }
             if (e.target.classList.contains('add-new-task-btn')) {
                 return newTaskModal.theModal.showModal();
+            }
+            if (e.target.classList.contains('delete-task-btn')) {
+                projects.forEach(project => {
+                    project.checklist = project.checklist.filter(list => list.id !== e.target.dataset.checklistId)            
+                })
+                save();
+                renderSelectedProject();
             }
         })
     }
@@ -335,6 +341,8 @@ const myProjects = (function () {
     }
     //---Makes the selected project full screen
     function renderSelectedProject() {
+        clearElements(projectCardContainer);
+        clearElements(projectsHeader);
         selectedProject.forEach(project => {
             let selectedProjectCard = document.createElement('div');
             selectedProjectCard.classList.add('selected-project-card');
@@ -425,15 +433,18 @@ const myProjects = (function () {
 
                 let taskCheckBox = document.createElement('input');
                 taskCheckBox.type = "checkbox";
+                taskCheckBox.id = task.id;
                 taskCheckboxConatiner.appendChild(taskCheckBox);
 
-                let checkboxDescription = document.createElement('p');
+                let checkboxDescription = document.createElement('label');
                 checkboxDescription.innerText = "Check Complete";
+                checkboxDescription.htmlFor = task.id;
                 taskCheckboxConatiner.appendChild(checkboxDescription);
 
                 let deleteTaskBtn = document.createElement('button');
                 deleteTaskBtn.classList.add('delete-task-btn');
                 deleteTaskBtn.innerText = "Delete"
+                deleteTaskBtn.dataset.checklistId = task.id;
                 taskOptionsContainer.appendChild(deleteTaskBtn)
 
                 let taskText = document.createElement('p');
