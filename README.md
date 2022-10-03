@@ -39,3 +39,7 @@ Features still to implement -
 -   Sort projects by date.
 -   Ability to edit projects and tasks once they are added.
 -   Filter Tasks by open/closed status.
+
+Site Demo -
+
+https://nighistheend.github.io/Project-Manager-Dashboard/
