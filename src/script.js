@@ -344,7 +344,7 @@ const myProjects = (function () {
 			projectCardDiv.appendChild(projectCardTitle);
 
 			let projectCardChecklist = document.createElement("p");
-			projectCardChecklist.innerText = `Open Tasks: ${project.checklist.length}`;
+			projectCardChecklist.innerText = `Tasks: ${project.checklist.length}`;
 			projectCardDiv.appendChild(projectCardChecklist);
 
 			let projectCardPriority = document.createElement("p");
