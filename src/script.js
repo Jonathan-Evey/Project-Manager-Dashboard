@@ -1,17 +1,18 @@
-import findDOMElements from './DOMElements.js'
+import findDOMElements from "./DOMElements.js";
 
 /*Your todo list should have projects or separate lists of todos. When a user first opens the app, there should be some sort of ‘default’ project to which all of their todos are put. Users should be able to create new projects and choose which project their todos go into. */
 const myProjects = (function () {
-    
-    const LOCAL_STORAGE_PROJECTS_KEY = 'myProjectManager.Project';
-    let projects = JSON.parse(localStorage.getItem(LOCAL_STORAGE_PROJECTS_KEY)) || [];
+	const LOCAL_STORAGE_PROJECTS_KEY = "myProjectManager.Project";
+	let projects =
+		JSON.parse(localStorage.getItem(LOCAL_STORAGE_PROJECTS_KEY)) || [];
 
-    let projectCardContainer = findDOMElements.HTML_ANCHORS.projectCardContainer
-    let newProjectModal = findDOMElements.newProjectModal
-    let newTaskModal = findDOMElements.newTaskModal
-    let projectsHeader = findDOMElements.HTML_ANCHORS.projectsHeader
+	let projectCardContainer =
+		findDOMElements.HTML_ANCHORS.projectCardContainer;
+	let newProjectModal = findDOMElements.newProjectModal;
+	let newTaskModal = findDOMElements.newTaskModal;
+	let projectsHeader = findDOMElements.HTML_ANCHORS.projectsHeader;
 
-    /*let projects = [
+	/*let projects = [
         {
             id: "123456789", //pull time stamp to make a uniqe id
             title: "Project With a Cool Name", //user input from html form
@@ -71,427 +72,473 @@ const myProjects = (function () {
         }
     ]; */
 
-    let sortedProjects = projects
-    
-    let selectedProject = []
+	let sortedProjects = projects;
 
-    const createProject = (title, description, dueDate, priority) => {
-        return {
-            id: Date.now().toString(),
-            title: title,
-            description: description,
-            checklist: [],
-            dueDate: dueDate,
-            priority: priority,
-        }
-    }
+	let selectedProject = [];
 
-    const creatChecklist = (taskDetails) => {
-        return {
-            id: Date.now().toString(),
-            taskDetails: taskDetails,
-            complete: false,
-        }
-    }
+	const createProject = (title, description, dueDate, priority) => {
+		return {
+			id: Date.now().toString(),
+			title: title,
+			description: description,
+			checklist: [],
+			dueDate: dueDate,
+			priority: priority,
+		};
+	};
 
-    ////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////
-    /////////////// form interactions for adding a project /////////////////
-    ////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////
-    newProjectModal.theModal.addEventListener('submit', (e) => {
-        e.preventDefault();
-    })
-    
-    newProjectModal.saveBtn.addEventListener('click', () => {
-        pushFormInputToProjects();
-        console.log(projects);
-        render();
-        return
-    })
+	const creatChecklist = (taskDetails) => {
+		return {
+			id: Date.now().toString(),
+			taskDetails: taskDetails,
+			complete: false,
+		};
+	};
 
-    //---on form submit btn event - takes input value and pushes to projects array
-    function pushFormInputToProjects() {
-        let newProjectTitle = newProjectModal.titleInput.value;
-        if (newProjectTitle === null || newProjectTitle === '') {
-            return
-        }
-        let newProjectDescription = newProjectModal.descriptionInput.value;
-        let newProjectDueDate = newProjectModal.dueDateInput.value;
+	////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////
+	/////////////// form interactions for adding a project /////////////////
+	////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////
+	newProjectModal.theModal.addEventListener("submit", (e) => {
+		e.preventDefault();
+	});
 
-        let newProjectPriorityInput = document.querySelector('input[type=radio][name=priority]:checked');
-        let newProjectPriority = newProjectPriorityInput.value;
+	newProjectModal.saveBtn.addEventListener("click", () => {
+		pushFormInputToProjects();
+		console.log(projects);
+		render();
+		return;
+	});
 
-        let project = createProject(newProjectTitle, newProjectDescription, newProjectDueDate, newProjectPriority);
+	//---on form submit btn event - takes input value and pushes to projects array
+	function pushFormInputToProjects() {
+		let newProjectTitle = newProjectModal.titleInput.value;
+		if (newProjectTitle === null || newProjectTitle === "") {
+			return;
+		}
+		let newProjectDescription = newProjectModal.descriptionInput.value;
+		let newProjectDueDate = newProjectModal.dueDateInput.value;
 
-        projects.push(project);
-        resetProjectForm();
-        return
-    }
-    //---- resets project form to defalut
-    function resetProjectForm() {
-        newProjectModal.titleInput.value = null;
-        newProjectModal.descriptionInput.value = null;
-        newProjectModal.dueDateInput.value = null;
-        let defaultPriority = document.getElementById('none');
-        defaultPriority.checked = true
-        newProjectModal.theModal.close();
-        return
-    }
+		let newProjectPriorityInput = document.querySelector(
+			"input[type=radio][name=priority]:checked"
+		);
+		let newProjectPriority = newProjectPriorityInput.value;
 
-    newTaskModal.theModal.addEventListener('submit', (e) => {
-        e.preventDefault();
-    })
-    newTaskModal.saveBtn.addEventListener('click', () => {
-        pushFormInputToTasks();
-        resetTaskForm();
-        save();
-        clearElements(projectCardContainer);
-        clearElements(projectsHeader);
-        renderSelectedProject();
-        return
-    })
-    function pushFormInputToTasks() {
-        let newTaskDetails = newTaskModal.taskDetailsInput.value;
-        if (newTaskDetails === null || newTaskDetails === '') {
-            return
-        }
-        let task = creatChecklist(newTaskDetails);
-        let openModalBtnId = document.querySelector('.add-new-task-btn');
-        let currentProjectId = openModalBtnId.dataset.projectId;
-        let currentProject = projects.find(project => project.id === currentProjectId);
-        currentProject.checklist.push(task);
-        console.log(projects);
-        return
-    }
-    function resetTaskForm() {
-        newTaskModal.taskDetailsInput.value = null;
-        newTaskModal.theModal.close();
-        return
-    }
+		let project = createProject(
+			newProjectTitle,
+			newProjectDescription,
+			newProjectDueDate,
+			newProjectPriority
+		);
 
-    ////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////
-    ///////////////////////// Event listeners //////////////////////////////
-    ////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////
+		projects.push(project);
+		resetProjectForm();
+		return;
+	}
+	//---- resets project form to defalut
+	function resetProjectForm() {
+		newProjectModal.titleInput.value = null;
+		newProjectModal.descriptionInput.value = null;
+		newProjectModal.dueDateInput.value = null;
+		let defaultPriority = document.getElementById("none");
+		defaultPriority.checked = true;
+		newProjectModal.theModal.close();
+		return;
+	}
 
-    function projectHeaderEventListeners() {
-        projectsHeader.addEventListener('click', (e) => {
-            if (e.target.classList.contains('open-project-modal-btn')) {
-                return newProjectModal.theModal.showModal();
-            }
-            if (e.target.classList.contains('sort-by-most-btn')) {
-                sortByMostTaks();
-                render();
-            }
-            if (e.target.classList.contains('sort-by-least-btn')) {
-                sortByLeastTaks();
-                render();
-            }
-        })
-    }
+	newTaskModal.theModal.addEventListener("submit", (e) => {
+		e.preventDefault();
+	});
+	newTaskModal.saveBtn.addEventListener("click", () => {
+		pushFormInputToTasks();
+		resetTaskForm();
+		save();
+		clearElements(projectCardContainer);
+		clearElements(projectsHeader);
+		renderSelectedProject();
+		return;
+	});
+	function pushFormInputToTasks() {
+		let newTaskDetails = newTaskModal.taskDetailsInput.value;
+		if (newTaskDetails === null || newTaskDetails === "") {
+			return;
+		}
+		let task = creatChecklist(newTaskDetails);
+		let openModalBtnId = document.querySelector(".add-new-task-btn");
+		let currentProjectId = openModalBtnId.dataset.projectId;
+		let currentProject = projects.find(
+			(project) => project.id === currentProjectId
+		);
+		currentProject.checklist.push(task);
+		console.log(projects);
+		return;
+	}
+	function resetTaskForm() {
+		newTaskModal.taskDetailsInput.value = null;
+		newTaskModal.theModal.close();
+		return;
+	}
 
-    function projectCardEventListeners() {
-        projectCardContainer.addEventListener('click', (e) => {
-            if (e.target.classList.contains('delete-project-btn')) {
-                projects = projects.filter(project => project.id !== e.target.dataset.projectId);
-                render();
-            }
-            if (e.target.classList.contains('project-card')) {
-                selectedProject = projects.filter(project => project.id === e.target.dataset.projectId);
-                console.log(selectedProject);
-                renderSelectedProject();
-            }
-            if (e.target.classList.contains('close-project-btn')) {
-                clearElements(projectCardContainer);
-                render();
-            }
-            if (e.target.classList.contains('add-new-task-btn')) {
-                return newTaskModal.theModal.showModal();
-            }
-            if (e.target.classList.contains('delete-task-btn')) {
-                projects.forEach(project => {
-                    project.checklist = project.checklist.filter(list => list.id !== e.target.dataset.checklistId)            
-                })
-                save();
-                renderSelectedProject();
-            }
-        })
-    }
+	////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////
+	///////////////////////// Event listeners //////////////////////////////
+	////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////
 
-    ////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////
-    /////////////////// HTML render functions //////////////////////////////
-    ////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////
-    function save() {
-        localStorage.setItem(LOCAL_STORAGE_PROJECTS_KEY, JSON.stringify(projects));
-    }
-    function render() {
-        save();
-        clearElements(projectCardContainer);
-        clearElements(projectsHeader);
-        renderProjectsHeader();
-        renderProjects();
-    }
-    
-    function clearElements(element) {
-        while(element.firstChild) {
-            element.removeChild(element.firstChild);
-        }
-    }
-    //---Makes the header over the list of projects
-    function renderProjectsHeader() {
-        let projectHeaderSortContainer = document.createElement('div');
-        projectHeaderSortContainer.classList.add('project-header-sort-container')
-        projectsHeader.appendChild(projectHeaderSortContainer)
+	function projectHeaderEventListeners() {
+		projectsHeader.addEventListener("click", (e) => {
+			if (e.target.classList.contains("open-project-modal-btn")) {
+				return newProjectModal.theModal.showModal();
+			}
+			if (e.target.classList.contains("sort-by-most-btn")) {
+				sortByMostTaks();
+				render();
+			}
+			if (e.target.classList.contains("sort-by-least-btn")) {
+				sortByLeastTaks();
+				render();
+			}
+		});
+	}
 
-        let projectHeaderTitle = document.createElement('p');
-        projectHeaderTitle.innerText = "Sort Projects";
-        projectHeaderTitle.classList.add('sort-project-menu-title')
-        projectHeaderSortContainer.appendChild(projectHeaderTitle);
+	function projectCardEventListeners() {
+		projectCardContainer.addEventListener("click", (e) => {
+			if (e.target.classList.contains("delete-project-btn")) {
+				projects = projects.filter(
+					(project) => project.id !== e.target.dataset.projectId
+				);
+				render();
+			}
+			if (e.target.classList.contains("project-card")) {
+				selectedProject = projects.filter(
+					(project) => project.id === e.target.dataset.projectId
+				);
+				renderSelectedProject();
+			}
+			if (e.target.classList.contains("close-project-btn")) {
+				clearElements(projectCardContainer);
+				render();
+			}
+			if (e.target.classList.contains("add-new-task-btn")) {
+				return newTaskModal.theModal.showModal();
+			}
+			if (
+				e.target.classList.contains(
+					"task-checkbox-conatiner" ||
+						"task-checkbox-label" ||
+						"task-checkbox"
+				)
+			) {
+				selectedProject[0].checklist.forEach((list) => {
+					if (list.id === e.target.id) {
+						list.complete = !list.complete;
+					}
+				});
+				save();
+				renderSelectedProject();
+			}
+			if (e.target.classList.contains("delete-task-btn")) {
+				projects.forEach((project) => {
+					project.checklist = project.checklist.filter(
+						(list) => list.id !== e.target.dataset.checklistId
+					);
+				});
+				save();
+				renderSelectedProject();
+			}
+		});
+	}
 
-        let sortByTasksContainer = document.createElement('div');
-        projectHeaderSortContainer.appendChild(sortByTasksContainer);
-        let projectHeaderTaskCount = document.createElement('p');
-        projectHeaderTaskCount.innerText = "Tasks:";
-        sortByTasksContainer.appendChild(projectHeaderTaskCount);
-        let projectSortByMostTasksBtn = document.createElement('button');
-        projectSortByMostTasksBtn.classList.add('sort-by-most-btn')
-        projectSortByMostTasksBtn.innerText = "Most";
-        sortByTasksContainer.appendChild(projectSortByMostTasksBtn);
-        let projectSortByLeastTasksBtn = document.createElement('button');
-        projectSortByLeastTasksBtn.classList.add('sort-by-least-btn')
-        projectSortByLeastTasksBtn.innerText = "Least";
-        sortByTasksContainer.appendChild(projectSortByLeastTasksBtn);
+	////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////
+	/////////////////// HTML render functions //////////////////////////////
+	////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////
+	function save() {
+		localStorage.setItem(
+			LOCAL_STORAGE_PROJECTS_KEY,
+			JSON.stringify(projects)
+		);
+	}
+	function render() {
+		save();
+		clearElements(projectCardContainer);
+		clearElements(projectsHeader);
+		renderProjectsHeader();
+		renderProjects();
+	}
 
-        let sortByPriorityContainer = document.createElement('div');
-        projectHeaderSortContainer.appendChild(sortByPriorityContainer);
-        let projectPriority = document.createElement('p');
-        projectPriority.innerText = "Priority:";
-        sortByPriorityContainer.appendChild(projectPriority);
-        let projectSortByHighestPriorityBtn = document.createElement('button');
-        projectSortByHighestPriorityBtn.innerText = "Highest";
-        sortByPriorityContainer.appendChild(projectSortByHighestPriorityBtn);
-        let projectSortByLeastPriorityBtn = document.createElement('button');
-        projectSortByLeastPriorityBtn.innerText = "Least";
-        sortByPriorityContainer.appendChild(projectSortByLeastPriorityBtn);
+	function clearElements(element) {
+		while (element.firstChild) {
+			element.removeChild(element.firstChild);
+		}
+	}
+	//---Makes the header over the list of projects
+	function renderProjectsHeader() {
+		let projectHeaderSortContainer = document.createElement("div");
+		projectHeaderSortContainer.classList.add(
+			"project-header-sort-container"
+		);
+		projectsHeader.appendChild(projectHeaderSortContainer);
 
-        let sortByDateContainer = document.createElement('div');
-        projectHeaderSortContainer.appendChild(sortByDateContainer);
-        let projectDueDate = document.createElement('p');
-        projectDueDate.innerText = "Date:";
-        sortByDateContainer.appendChild(projectDueDate);
-        let projectSortByClosestDateBtn = document.createElement('button');
-        projectSortByClosestDateBtn.innerText = "Closest";
-        sortByDateContainer.appendChild(projectSortByClosestDateBtn);
-        let projectSortByFarthestDateBtn = document.createElement('button');
-        projectSortByFarthestDateBtn.innerText = "Farthest";
-        sortByDateContainer.appendChild(projectSortByFarthestDateBtn);
+		let projectHeaderTitle = document.createElement("p");
+		projectHeaderTitle.innerText = "Sort Projects";
+		projectHeaderTitle.classList.add("sort-project-menu-title");
+		projectHeaderSortContainer.appendChild(projectHeaderTitle);
 
-        let openProjectModalBtn = document.createElement('button');
-        openProjectModalBtn.classList.add('open-project-modal-btn')
-        openProjectModalBtn.innerText = "+ Project";
-        projectsHeader.appendChild(openProjectModalBtn);
-        
+		let sortByTasksContainer = document.createElement("div");
+		projectHeaderSortContainer.appendChild(sortByTasksContainer);
+		let projectHeaderTaskCount = document.createElement("p");
+		projectHeaderTaskCount.innerText = "Tasks:";
+		sortByTasksContainer.appendChild(projectHeaderTaskCount);
+		let projectSortByMostTasksBtn = document.createElement("button");
+		projectSortByMostTasksBtn.classList.add("sort-by-most-btn");
+		projectSortByMostTasksBtn.innerText = "Most";
+		sortByTasksContainer.appendChild(projectSortByMostTasksBtn);
+		let projectSortByLeastTasksBtn = document.createElement("button");
+		projectSortByLeastTasksBtn.classList.add("sort-by-least-btn");
+		projectSortByLeastTasksBtn.innerText = "Least";
+		sortByTasksContainer.appendChild(projectSortByLeastTasksBtn);
 
-    }
-    //---Makes the list of projects
-    function renderProjects() {
-        sortedProjects.forEach(project => {
-            ///////////////////Creates Cards for Each Project//////////////
-            let projectCardDiv = document.createElement('div');
-            projectCardDiv.classList.add('project-card');
-            projectCardDiv.dataset.projectId = project.id;
-            projectCardContainer.appendChild(projectCardDiv);
-            
-            let projectCardTitle = document.createElement('h3');
-            projectCardTitle.innerText = project.title;
-            projectCardDiv.appendChild(projectCardTitle);
+		let sortByPriorityContainer = document.createElement("div");
+		projectHeaderSortContainer.appendChild(sortByPriorityContainer);
+		let projectPriority = document.createElement("p");
+		projectPriority.innerText = "Priority:";
+		sortByPriorityContainer.appendChild(projectPriority);
+		let projectSortByHighestPriorityBtn = document.createElement("button");
+		projectSortByHighestPriorityBtn.innerText = "Highest";
+		sortByPriorityContainer.appendChild(projectSortByHighestPriorityBtn);
+		let projectSortByLeastPriorityBtn = document.createElement("button");
+		projectSortByLeastPriorityBtn.innerText = "Least";
+		sortByPriorityContainer.appendChild(projectSortByLeastPriorityBtn);
 
-            let projectCardChecklist = document.createElement('p');
-            projectCardChecklist.innerText = `Open Tasks: ${project.checklist.length}`;
-            projectCardDiv.appendChild(projectCardChecklist)
+		let sortByDateContainer = document.createElement("div");
+		projectHeaderSortContainer.appendChild(sortByDateContainer);
+		let projectDueDate = document.createElement("p");
+		projectDueDate.innerText = "Date:";
+		sortByDateContainer.appendChild(projectDueDate);
+		let projectSortByClosestDateBtn = document.createElement("button");
+		projectSortByClosestDateBtn.innerText = "Closest";
+		sortByDateContainer.appendChild(projectSortByClosestDateBtn);
+		let projectSortByFarthestDateBtn = document.createElement("button");
+		projectSortByFarthestDateBtn.innerText = "Farthest";
+		sortByDateContainer.appendChild(projectSortByFarthestDateBtn);
 
-            let projectCardPriority = document.createElement('p');
-            projectCardPriority.innerText = `Priority: ${project.priority}`;
-            projectCardDiv.appendChild(projectCardPriority)
+		let openProjectModalBtn = document.createElement("button");
+		openProjectModalBtn.classList.add("open-project-modal-btn");
+		openProjectModalBtn.innerText = "+ Project";
+		projectsHeader.appendChild(openProjectModalBtn);
+	}
+	//---Makes the list of projects
+	function renderProjects() {
+		sortedProjects.forEach((project) => {
+			///////////////////Creates Cards for Each Project//////////////
+			let projectCardDiv = document.createElement("div");
+			projectCardDiv.classList.add("project-card");
+			projectCardDiv.dataset.projectId = project.id;
+			projectCardContainer.appendChild(projectCardDiv);
 
-            let projectCardDueDate = document.createElement('p');
-            projectCardDueDate.innerText = `Complete by: ${project.dueDate}`;
-            projectCardDiv.appendChild(projectCardDueDate)
+			let projectCardTitle = document.createElement("h3");
+			projectCardTitle.innerText = project.title;
+			projectCardDiv.appendChild(projectCardTitle);
 
-            ///////////////Create Edit and Delete Projects Buttons//////////
-            let projectBtnContainer = document.createElement('div');
-            projectBtnContainer.classList.add('project-btn-container');
-            projectCardDiv.appendChild(projectBtnContainer)
+			let projectCardChecklist = document.createElement("p");
+			projectCardChecklist.innerText = `Open Tasks: ${project.checklist.length}`;
+			projectCardDiv.appendChild(projectCardChecklist);
 
-            let editProjectBtn = document.createElement('button');
-            editProjectBtn.innerText = "Edit";
-            editProjectBtn.classList.add('edit-project-btn');
-            projectBtnContainer.appendChild(editProjectBtn)
+			let projectCardPriority = document.createElement("p");
+			projectCardPriority.innerText = `Priority: ${project.priority}`;
+			projectCardDiv.appendChild(projectCardPriority);
 
-            let deleteProjectBtn = document.createElement('button');
-            deleteProjectBtn.innerText = "Delete"
-            deleteProjectBtn.classList.add('delete-project-btn');
-            deleteProjectBtn.dataset.projectId = project.id;
-            projectBtnContainer.appendChild(deleteProjectBtn)
-        })
-    }
-    //---Makes the selected project full screen
-    function renderSelectedProject() {
-        clearElements(projectCardContainer);
-        clearElements(projectsHeader);
-        selectedProject.forEach(project => {
-            let selectedProjectCard = document.createElement('div');
-            selectedProjectCard.classList.add('selected-project-card');
-            projectCardContainer.appendChild(selectedProjectCard);
+			let projectCardDueDate = document.createElement("p");
+			projectCardDueDate.innerText = `Complete by: ${project.dueDate}`;
+			projectCardDiv.appendChild(projectCardDueDate);
 
-            let selectedProjectHeader = document.createElement('div');
-            selectedProjectHeader.classList.add('selected-project-header');
-            selectedProjectCard.appendChild(selectedProjectHeader);
+			///////////////Create Edit and Delete Projects Buttons//////////
+			let projectBtnContainer = document.createElement("div");
+			projectBtnContainer.classList.add("project-btn-container");
+			projectCardDiv.appendChild(projectBtnContainer);
 
-            let selectedProjectTitle = document.createElement('h3');
-            selectedProjectTitle.innerText = project.title;
-            selectedProjectHeader.appendChild(selectedProjectTitle);
+			let editProjectBtn = document.createElement("button");
+			editProjectBtn.innerText = "Edit";
+			editProjectBtn.classList.add("edit-project-btn");
+			projectBtnContainer.appendChild(editProjectBtn);
 
-            let closeProjectBtn = document.createElement('button');
-            closeProjectBtn.classList.add('close-project-btn');
-            closeProjectBtn.innerText = "Back to Project List"
-            selectedProjectHeader.appendChild(closeProjectBtn);
+			let deleteProjectBtn = document.createElement("button");
+			deleteProjectBtn.innerText = "Delete";
+			deleteProjectBtn.classList.add("delete-project-btn");
+			deleteProjectBtn.dataset.projectId = project.id;
+			projectBtnContainer.appendChild(deleteProjectBtn);
+		});
+	}
+	//---Makes the selected project full screen
+	function renderSelectedProject() {
+		clearElements(projectCardContainer);
+		clearElements(projectsHeader);
+		selectedProject.forEach((project) => {
+			let selectedProjectCard = document.createElement("div");
+			selectedProjectCard.classList.add("selected-project-card");
+			projectCardContainer.appendChild(selectedProjectCard);
 
-            let selectedProjectAside = document.createElement('div');
-            selectedProjectAside.classList.add('selected-project-aside');
-            selectedProjectCard.appendChild(selectedProjectAside);
+			let selectedProjectHeader = document.createElement("div");
+			selectedProjectHeader.classList.add("selected-project-header");
+			selectedProjectCard.appendChild(selectedProjectHeader);
 
-            let projectDeadlineContainer = document.createElement('div');
-            projectDeadlineContainer.classList.add('project-deadline-container');
-            selectedProjectAside.appendChild(projectDeadlineContainer);
+			let selectedProjectTitle = document.createElement("h3");
+			selectedProjectTitle.innerText = project.title;
+			selectedProjectHeader.appendChild(selectedProjectTitle);
 
-            let selectedProjectDueDate = document.createElement('p');
-            selectedProjectDueDate.innerText = "Due: " + project.dueDate;
-            projectDeadlineContainer.appendChild(selectedProjectDueDate);
+			let closeProjectBtn = document.createElement("button");
+			closeProjectBtn.classList.add("close-project-btn");
+			closeProjectBtn.innerText = "Back to Project List";
+			selectedProjectHeader.appendChild(closeProjectBtn);
 
-            let selectedProjectPriority = document.createElement('p');
-            selectedProjectPriority.innerText = "Priority: " + project.priority;
-            projectDeadlineContainer.appendChild(selectedProjectPriority);
+			let selectedProjectAside = document.createElement("div");
+			selectedProjectAside.classList.add("selected-project-aside");
+			selectedProjectCard.appendChild(selectedProjectAside);
 
-            let selectedProjectCardDescription = document.createElement('p');
-            selectedProjectCardDescription.classList.add('project-description');
-            selectedProjectCardDescription.innerText = project.description;
-            selectedProjectAside.appendChild(selectedProjectCardDescription);
-            
-            let selectedProjectTaskContainer = document.createElement('div');
-            selectedProjectTaskContainer.classList.add('selected-project-task-container');
-            selectedProjectCard.appendChild(selectedProjectTaskContainer);
+			let projectDeadlineContainer = document.createElement("div");
+			projectDeadlineContainer.classList.add(
+				"project-deadline-container"
+			);
+			selectedProjectAside.appendChild(projectDeadlineContainer);
 
-            //---filter and add tasks to task list
-            let selectedProjectChecklistFilter = document.createElement('div');
-            selectedProjectChecklistFilter.classList.add('task-filter-card');
+			let selectedProjectDueDate = document.createElement("p");
+			selectedProjectDueDate.innerText = "Due: " + project.dueDate;
+			projectDeadlineContainer.appendChild(selectedProjectDueDate);
 
-            let filterTasksBtnContainer = document.createElement('div');
-            filterTasksBtnContainer.classList.add('filter-tasks-btn-container')
-            selectedProjectChecklistFilter.appendChild(filterTasksBtnContainer);
+			let selectedProjectPriority = document.createElement("p");
+			selectedProjectPriority.innerText = "Priority: " + project.priority;
+			projectDeadlineContainer.appendChild(selectedProjectPriority);
 
-            let filterTasksLable = document.createElement('p');
-            filterTasksLable.innerText = "Filter Tasks:"
-            filterTasksBtnContainer.appendChild(filterTasksLable);
+			let selectedProjectCardDescription = document.createElement("p");
+			selectedProjectCardDescription.classList.add("project-description");
+			selectedProjectCardDescription.innerText = project.description;
+			selectedProjectAside.appendChild(selectedProjectCardDescription);
 
-            let allTasksBtn = document.createElement('button');
-            allTasksBtn.innerText = "All"
-            filterTasksBtnContainer.appendChild(allTasksBtn);
+			let selectedProjectTaskContainer = document.createElement("div");
+			selectedProjectTaskContainer.classList.add(
+				"selected-project-task-container"
+			);
+			selectedProjectCard.appendChild(selectedProjectTaskContainer);
 
-            let openTasksBtn = document.createElement('button');
-            openTasksBtn.innerText = "Open"
-            filterTasksBtnContainer.appendChild(openTasksBtn);
+			//---filter and add tasks to task list
+			let selectedProjectChecklistFilter = document.createElement("div");
+			selectedProjectChecklistFilter.classList.add("task-filter-card");
 
-            let closedTasksBtn = document.createElement('button');
-            closedTasksBtn.innerText = "Closed"
-            filterTasksBtnContainer.appendChild(closedTasksBtn);
+			let filterTasksBtnContainer = document.createElement("div");
+			filterTasksBtnContainer.classList.add("filter-tasks-btn-container");
+			selectedProjectChecklistFilter.appendChild(filterTasksBtnContainer);
 
-            let addNewTaskBtn = document.createElement('button');
-            addNewTaskBtn.dataset.projectId = project.id;
-            addNewTaskBtn.classList.add('add-new-task-btn');
-            addNewTaskBtn.innerText = "+ Task"
-            selectedProjectChecklistFilter.appendChild(addNewTaskBtn);
+			let filterTasksLable = document.createElement("p");
+			filterTasksLable.innerText = "Filter Tasks:";
+			filterTasksBtnContainer.appendChild(filterTasksLable);
 
-            selectedProjectTaskContainer.appendChild(selectedProjectChecklistFilter);
+			let allTasksBtn = document.createElement("button");
+			allTasksBtn.innerText = "All";
+			filterTasksBtnContainer.appendChild(allTasksBtn);
 
+			let openTasksBtn = document.createElement("button");
+			openTasksBtn.innerText = "Open";
+			filterTasksBtnContainer.appendChild(openTasksBtn);
 
-            project.checklist.forEach(task => {
-                let selectedProjectChecklist = document.createElement('div');
-                selectedProjectChecklist.classList.add('task-card');
+			let closedTasksBtn = document.createElement("button");
+			closedTasksBtn.innerText = "Closed";
+			filterTasksBtnContainer.appendChild(closedTasksBtn);
 
-                let taskOptionsContainer = document.createElement('div');
-                taskOptionsContainer.classList.add('task-options-container');
-                selectedProjectChecklist.appendChild(taskOptionsContainer);
+			let addNewTaskBtn = document.createElement("button");
+			addNewTaskBtn.dataset.projectId = project.id;
+			addNewTaskBtn.classList.add("add-new-task-btn");
+			addNewTaskBtn.innerText = "+ Task";
+			selectedProjectChecklistFilter.appendChild(addNewTaskBtn);
 
-                let taskCheckboxConatiner = document.createElement('div');
-                taskCheckboxConatiner.classList.add('task-checkbox-conatiner');
-                taskOptionsContainer.appendChild(taskCheckboxConatiner)
+			selectedProjectTaskContainer.appendChild(
+				selectedProjectChecklistFilter
+			);
 
-                let taskCheckBox = document.createElement('input');
-                taskCheckBox.type = "checkbox";
-                taskCheckBox.id = task.id;
-                taskCheckboxConatiner.appendChild(taskCheckBox);
+			project.checklist.forEach((task) => {
+				let selectedProjectChecklist = document.createElement("div");
+				selectedProjectChecklist.classList.add("task-card");
+				if (task.complete) {
+					selectedProjectChecklist.classList.add("complete");
+				}
 
-                let checkboxDescription = document.createElement('label');
-                checkboxDescription.innerText = "Check Complete";
-                checkboxDescription.htmlFor = task.id;
-                taskCheckboxConatiner.appendChild(checkboxDescription);
+				let taskOptionsContainer = document.createElement("div");
+				taskOptionsContainer.classList.add("task-options-container");
+				selectedProjectChecklist.appendChild(taskOptionsContainer);
 
-                let deleteTaskBtn = document.createElement('button');
-                deleteTaskBtn.classList.add('delete-task-btn');
-                deleteTaskBtn.innerText = "Delete"
-                deleteTaskBtn.dataset.checklistId = task.id;
-                taskOptionsContainer.appendChild(deleteTaskBtn)
+				let taskCheckboxConatiner = document.createElement("div");
+				taskCheckboxConatiner.classList.add("task-checkbox-conatiner");
+				taskCheckboxConatiner.id = task.id;
+				taskOptionsContainer.appendChild(taskCheckboxConatiner);
 
-                let taskText = document.createElement('p');
-                taskText.innerText = task.taskDetails;
-                selectedProjectChecklist.appendChild(taskText);
+				let taskCheckBox = document.createElement("input");
+				taskCheckBox.type = "checkbox";
+				taskCheckBox.classList.add("task-checkbox");
+				taskCheckBox.id = task.id;
+				if (task.complete) {
+					taskCheckBox.checked = true;
+				}
+				taskCheckboxConatiner.appendChild(taskCheckBox);
 
+				let checkboxDescription = document.createElement("label");
+				checkboxDescription.innerText = "Check Complete";
+				checkboxDescription.classList.add("task-checkbox-label");
+				checkboxDescription.htmlFor = task.id;
+				taskCheckboxConatiner.appendChild(checkboxDescription);
 
-                selectedProjectTaskContainer.appendChild(selectedProjectChecklist);
-            })
-        })
-    }
+				let deleteTaskBtn = document.createElement("button");
+				deleteTaskBtn.classList.add("delete-task-btn");
+				deleteTaskBtn.innerText = "Delete";
+				deleteTaskBtn.dataset.checklistId = task.id;
+				taskOptionsContainer.appendChild(deleteTaskBtn);
 
+				let taskText = document.createElement("p");
+				taskText.innerText = task.taskDetails;
+				if (task.complete) {
+					taskText.classList.add("complete");
+				}
+				selectedProjectChecklist.appendChild(taskText);
 
-    ////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////
-    /////////////////////// Sort  functions ////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////
-    //---Sort Projects
-    function sortByMostTaks() {
-        let projectsByMostTasks = projects;
-        projectsByMostTasks.sort(function(a, b) {
-            return b.checklist.length - a.checklist.length
-        });
-        sortedProjects = projectsByMostTasks
-        return
-    }
+				selectedProjectTaskContainer.appendChild(
+					selectedProjectChecklist
+				);
+			});
+		});
+	}
 
-    function sortByLeastTaks() {
-        let projectsByLeastTasks = projects;
-        projectsByLeastTasks.sort(function(a, b) {
-            return a.checklist.length - b.checklist.length
-        });
-        sortedProjects = projectsByLeastTasks
-        return
-    }
+	////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////
+	/////////////////////// Sort  functions ////////////////////////////////
+	////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////
+	//---Sort Projects
+	function sortByMostTaks() {
+		let projectsByMostTasks = projects;
+		projectsByMostTasks.sort(function (a, b) {
+			return b.checklist.length - a.checklist.length;
+		});
+		sortedProjects = projectsByMostTasks;
+		return;
+	}
 
+	function sortByLeastTaks() {
+		let projectsByLeastTasks = projects;
+		projectsByLeastTasks.sort(function (a, b) {
+			return a.checklist.length - b.checklist.length;
+		});
+		sortedProjects = projectsByLeastTasks;
+		return;
+	}
 
-    return {
-        
-        renderProjectsHeader,
-        renderProjects,
-        renderSelectedProject,
-        projectHeaderEventListeners,
-        projectCardEventListeners,
-    }
-
+	return {
+		renderProjectsHeader,
+		renderProjects,
+		renderSelectedProject,
+		projectHeaderEventListeners,
+		projectCardEventListeners,
+	};
 })();
 
-export default myProjects
+export default myProjects;

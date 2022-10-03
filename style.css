@@ -1,324 +1,336 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 :root {
-    --clr-black: #000;
-    --clr-white: #fff;
+	--clr-black: #000;
+	--clr-white: #fff;
 
-    --clr-darkest: #2f3e46;
-    --clr-dark: #354f52;
-    --clr-mid: #52796f;
-    --clr-light: #84a98c;
-    --clr-lightest: #cad2c5;
-
-
+	--clr-darkest: #2f3e46;
+	--clr-dark: #354f52;
+	--clr-mid: #52796f;
+	--clr-light: #84a98c;
+	--clr-lightest: #cad2c5;
 }
 
 body {
-    background-color: brown;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+	background-color: brown;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
 }
 
-
 header {
-    background-color: var(--clr-darkest);
-    color: var(--clr-white);
-    box-shadow: 2px 4px 10px -3px rgba(0, 0, 0, 0.35),
-                2px 4px  10px -5px rgba(0, 0, 0, 0.5),
-                2px 4px  10px -8px rgba(0, 0, 0, 0.75);
-    z-index: 1;
+	background-color: var(--clr-darkest);
+	color: var(--clr-white);
+	box-shadow: 2px 4px 10px -3px rgba(0, 0, 0, 0.35),
+		2px 4px 10px -5px rgba(0, 0, 0, 0.5),
+		2px 4px 10px -8px rgba(0, 0, 0, 0.75);
+	z-index: 1;
 }
 
 .header-title-container {
-    padding: 2rem;
+	padding: 2rem;
 }
 
-.header-title-container h2{
-    margin-left: 1.5rem;
-    margin-top: -0.45rem;
+.header-title-container h2 {
+	margin-left: 1.5rem;
+	margin-top: -0.45rem;
 }
 
 main {
-    flex: 1;
-    display: grid;
-    grid-template-columns: 200px auto;
+	flex: 1;
+	display: grid;
+	grid-template-columns: 200px auto;
 }
 
 aside {
-    background-color: var(--clr-dark);
-    height: auto;
-    z-index: 1;
+	background-color: var(--clr-dark);
+	height: auto;
+	z-index: 1;
 }
 
 section {
-    background-color: var(--clr-lightest);
-    padding: 1rem 0.75rem;
+	background-color: var(--clr-lightest);
+	padding: 1rem 0.75rem;
 }
-
 
 /*-------Project List Cards-------*/
 .projects-list-header {
-    display: flex;
-    justify-content: space-between;
-    font-weight: 700;
-    padding: 0 0.75rem 0.5rem 0.75rem;
+	display: flex;
+	justify-content: space-between;
+	font-weight: 700;
+	padding: 0 0.75rem 0.5rem 0.75rem;
 }
 
 .project-header-sort-container {
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .sort-project-menu-title {
-    text-decoration: underline;
+	text-decoration: underline;
 }
 
 .project-header-sort-container div {
-    display: flex;
-    align-items: center;
-    margin-left: 2rem;
+	display: flex;
+	align-items: center;
+	margin-left: 2rem;
 }
 
-.project-header-sort-container button{
-    padding: .25rem 0 0.25rem 0.75rem;
-    background: none;
-    border: none;
-    font-size: 1rem;
+.project-header-sort-container button {
+	padding: 0.25rem 0 0.25rem 0.75rem;
+	background: none;
+	border: none;
+	font-size: 1rem;
 }
-
 
 .project-header-sort-container button:hover {
-    cursor: pointer;
-    color: var(--clr-white);
+	cursor: pointer;
+	color: var(--clr-white);
 }
 
 .project-card {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr) .75fr;
-    align-items: center;
-    padding: 0 0.75rem;
-    margin-bottom: 1rem;
-    background-color: var(--clr-dark);
-    color: var(--clr-white);
-    border-radius: 2px 2px 2px 20px;
-    box-shadow: 2px 4px 8px -3px rgba(0, 0, 0, 0.35),
-                2px 4px  8px -5px rgba(0, 0, 0, 0.5),
-                2px 4px  8px -8px rgba(0, 0, 0, 0.75);
+	display: grid;
+	grid-template-columns: repeat(4, 1fr) 0.75fr;
+	align-items: center;
+	padding: 0 0.75rem;
+	margin-bottom: 1rem;
+	background-color: var(--clr-dark);
+	color: var(--clr-white);
+	border-radius: 2px 2px 2px 20px;
+	box-shadow: 2px 4px 8px -3px rgba(0, 0, 0, 0.35),
+		2px 4px 8px -5px rgba(0, 0, 0, 0.5),
+		2px 4px 8px -8px rgba(0, 0, 0, 0.75);
 }
 
 .project-card p,
 .project-card h3 {
-    pointer-events: none;
+	pointer-events: none;
 }
 
 .project-card p {
-    text-align: center;
-    margin: 0 auto;
+	text-align: center;
+	margin: 0 auto;
 }
 
 .project-btn-container {
-    display: flex;
-    justify-content: flex-end;
+	display: flex;
+	justify-content: flex-end;
 }
 
 .edit-project-btn,
 .delete-project-btn {
-    color: var(--clr-white);
-    padding: 0.75rem;
-    background-color: transparent;
-    border: none;
-    
-    font-size: 1rem;
+	color: var(--clr-white);
+	padding: 0.75rem;
+	background-color: transparent;
+	border: none;
+
+	font-size: 1rem;
 }
 
 .edit-project-btn:hover,
 .delete-project-btn:hover {
-    cursor: pointer;
+	cursor: pointer;
 }
 
 .project-card:hover .edit-project-btn,
 .project-card:hover .delete-project-btn {
-    color: var(--clr-darkest);
+	color: var(--clr-darkest);
 }
 
 .project-card:hover {
-    cursor: pointer;
-    background-color: var(--clr-light);
-    color: var(--clr-darkest);
+	cursor: pointer;
+	background-color: var(--clr-light);
+	color: var(--clr-darkest);
 }
 
 .project-card:hover .edit-project-btn:hover {
-    color: var(--clr-lightest);
+	color: var(--clr-lightest);
 }
 
 .project-card:hover .delete-project-btn:hover,
 .delete-task-btn:hover {
-    color: crimson;
+	color: crimson;
 }
 
 /*-------Selected Project Card-------*/
 .selected-project-card {
-    display: grid;
-    grid-template-areas: 
-        "header header"
-        "aside container";
-    grid-template-columns: 35% 65%;
-    margin: 0 0.5rem;
-    color: var(--clr-white);
-    box-shadow: 2px 4px 10px -3px rgba(0, 0, 0, 0.35),
-                2px 4px  10px -5px rgba(0, 0, 0, 0.5),
-                2px 4px  10px -8px rgba(0, 0, 0, 0.75);
+	display: grid;
+	grid-template-areas:
+		"header header"
+		"aside container";
+	grid-template-columns: 35% 65%;
+	margin: 0 0.5rem;
+	color: var(--clr-white);
+	box-shadow: 2px 4px 10px -3px rgba(0, 0, 0, 0.35),
+		2px 4px 10px -5px rgba(0, 0, 0, 0.5),
+		2px 4px 10px -8px rgba(0, 0, 0, 0.75);
 }
 
 .selected-project-header {
-    grid-area: header;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem;
-    background-color: var(--clr-darkest);
-    box-shadow: 2px 4px 10px -4px rgba(0, 0, 0, 0.25),
-                2px 4px  10px -6px rgba(0, 0, 0, 0.4),
-                2px 4px  10px -9px rgba(0, 0, 0, 0.65);
-    z-index: 1;
+	grid-area: header;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1.5rem;
+	background-color: var(--clr-darkest);
+	box-shadow: 2px 4px 10px -4px rgba(0, 0, 0, 0.25),
+		2px 4px 10px -6px rgba(0, 0, 0, 0.4),
+		2px 4px 10px -9px rgba(0, 0, 0, 0.65);
+	z-index: 1;
 }
 
 .close-project-btn {
-    background: none;
-    padding: 0.5rem;
-    font-size: 0.9rem;
-    color: var(--clr-white);
-    border: none;
+	background: none;
+	padding: 0.5rem;
+	font-size: 0.9rem;
+	color: var(--clr-white);
+	border: none;
 }
 
 .close-project-btn:hover {
-    cursor: pointer;
-    color: var(--clr-light);
+	cursor: pointer;
+	color: var(--clr-light);
 }
 
 .selected-project-aside {
-    grid-area: aside;
-    padding: 0.75rem 1rem;
-    background-color: var(--clr-dark);
-    box-shadow: 4px -2px 10px -6px rgba(0, 0, 0, 0.25),
-                4px -2px  10px -8px rgba(0, 0, 0, 0.4),
-                4px -2px  10px -10px rgba(0, 0, 0, 0.65);
-    z-index: 1;
+	grid-area: aside;
+	padding: 0.75rem 1rem;
+	background-color: var(--clr-dark);
+	box-shadow: 4px -2px 10px -6px rgba(0, 0, 0, 0.25),
+		4px -2px 10px -8px rgba(0, 0, 0, 0.4),
+		4px -2px 10px -10px rgba(0, 0, 0, 0.65);
+	z-index: 1;
 }
 
 .project-deadline-container {
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 1rem;
+	display: flex;
+	justify-content: space-between;
+	padding-bottom: 1rem;
 }
 
 .selected-project-task-container {
-    grid-area: container;
-    padding: 1rem 0.75rem 0.25rem 0.75rem;
-    background-color: var(--clr-light);
-    color: var(--clr-black);
+	grid-area: container;
+	padding: 1rem 0.75rem 0.25rem 0.75rem;
+	background-color: var(--clr-light);
+	color: var(--clr-black);
 }
 
 .task-card {
-    display: flex;
-    flex-direction: column;
-    padding: 0.5rem 1rem .6rem 1rem;
-    margin-bottom: 1rem;
-    background-color: var(--clr-dark);
-    color: var(--clr-white);
-    border-radius: 2px 2px 2px 20px;
-    box-shadow: 2px 4px 8px -3px rgba(0, 0, 0, 0.3),
-                2px 4px  8px -5px rgba(0, 0, 0, 0.45),
-                2px 4px  8px -8px rgba(0, 0, 0, 0.7);
+	display: flex;
+	flex-direction: column;
+	padding: 0.5rem 1rem 0.6rem 1rem;
+	margin-bottom: 1rem;
+	background-color: var(--clr-dark);
+	color: var(--clr-white);
+	border-radius: 2px 2px 2px 20px;
+	box-shadow: 2px 4px 8px -3px rgba(0, 0, 0, 0.3),
+		2px 4px 8px -5px rgba(0, 0, 0, 0.45),
+		2px 4px 8px -8px rgba(0, 0, 0, 0.7);
+}
+
+.task-card.complete {
+	background-color: var(--clr-mid);
 }
 
 .task-filter-card {
-    display: flex;
-    justify-content: space-between;
-    font-weight: 700;
-    padding: 0 1.5rem;
-    margin-bottom: 0.5rem;
+	display: flex;
+	justify-content: space-between;
+	font-weight: 700;
+	padding: 0 1.5rem;
+	margin-bottom: 0.5rem;
 }
 
 .task-filter-card button {
-    background: none;
-    border: none;
-    font-size: .9rem;
-    font-weight: 700;
-    padding: 0.25rem 0.5rem;
+	background: none;
+	border: none;
+	font-size: 0.9rem;
+	font-weight: 700;
+	padding: 0.25rem 0.5rem;
 }
 
 .task-filter-card button:hover {
-    cursor: pointer;
-    color: var(--clr-white);
+	cursor: pointer;
+	color: var(--clr-white);
 }
 
 .filter-tasks-btn-container,
 .task-options-container,
 .task-checkbox-conatiner {
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .task-options-container {
-    justify-content: space-between;
+	justify-content: space-between;
 }
 
-.task-checkbox-conatiner p {
-    margin-left: 0.5rem;
+.task-checkbox-conatiner {
+	pointer-events: all;
+	cursor: pointer;
+}
+
+.task-checkbox-conatiner label,
+.task-checkbox-conatiner input {
+	pointer-events: none;
+}
+
+.task-checkbox-conatiner label {
+	margin-left: 0.5rem;
+}
+p.complete {
+	text-decoration: line-through;
 }
 
 .delete-task-btn {
-    background: none;
-    border: none;
-    font-size: 1rem;
-    padding: 0.25rem 0.5rem;
-    color: var(--clr-white);
+	background: none;
+	border: none;
+	font-size: 1rem;
+	padding: 0.25rem 0.5rem;
+	color: var(--clr-white);
 }
 
 .delete-task-btn:hover {
-    cursor: pointer;
+	cursor: pointer;
 }
 
 .filter-tasks-btn-container p {
-    margin-right: 0.5rem;
+	margin-right: 0.5rem;
 }
 
 /*-------Add Project Form-------*/
 dialog {
-    margin: auto;
+	margin: auto;
 }
 
 .new-project-form {
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 .priority-fieldset {
-    display: flex;
-    flex-direction: row;
+	display: flex;
+	flex-direction: row;
 }
 
 @media (max-width: 1100px) {
-    section {
-        transform: translateX(-200px);
-        width: 100vw;
-    }
+	section {
+		transform: translateX(-200px);
+		width: 100vw;
+	}
 
-    aside {
-        transform: translateX(-200px);
-    }
+	aside {
+		transform: translateX(-200px);
+	}
 }
 
 @media (min-width: 1000px) {
-    aside {
-        box-shadow: 4px -2px 10px -5px rgba(0, 0, 0, 0.35),
-                4px -2px  10px -8px rgba(0, 0, 0, 0.5),
-                4px -2px  10px -10px rgba(0, 0, 0, 0.75);
-    }
+	aside {
+		box-shadow: 4px -2px 10px -5px rgba(0, 0, 0, 0.35),
+			4px -2px 10px -8px rgba(0, 0, 0, 0.5),
+			4px -2px 10px -10px rgba(0, 0, 0, 0.75);
+	}
 }
