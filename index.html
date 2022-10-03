@@ -1,78 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <script src="./dist/runtime.bundle.js"></script>
-    <title>Todo Lists</title>
-</head>
-<body>
-    <script src="./dist/index.bundle.js" defer></script>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="style.css" />
+		<script src="./dist/runtime.bundle.js"></script>
+		<title>Todo Lists</title>
+	</head>
+	<body>
+		<script src="./dist/index.bundle.js" defer></script>
 
-    <header>
-        <div class="header-title-container">
-            <h1>Project</h1>
-            <h2>Manager</h2>
-        </div>
-    </header>
-    
+		<header>
+			<div class="header-title-container">
+				<h1>Project</h1>
+				<h2>Manager</h2>
+			</div>
+		</header>
 
-    <main>
-        <aside class="side-bar-menu">
-            <button id="open-project-modal-btn">+ Project</button>
-        </aside>
-        <section>
-            <div class="projects-list-header" id="projects-list-header"></div>
-            <div id="project-card-container"></div>
-        </section>
+		<main>
+			<aside class="side-bar-menu">
+				<!-- <button id="open-project-modal-btn">+ Project</button> -->
+			</aside>
+			<section>
+				<div
+					class="projects-list-header"
+					id="projects-list-header"
+				></div>
+				<div id="project-card-container"></div>
+			</section>
+		</main>
 
+		<dialog class="add-new-project-modal" id="add-new-project-modal">
+			<form class="new-project-form">
+				<label for="project_title">Project Name:</label>
+				<input
+					type="text"
+					name="title"
+					id="project_title"
+					placeholder="Test Project"
+				/>
 
-    </main>
+				<label for="project_description">Project Description:</label>
+				<textarea
+					type="text"
+					name="description"
+					id="project_description"
+					placeholder="Detailed project infromation..."
+				></textarea>
 
-    <dialog class="add-new-project-modal" id="add-new-project-modal">
-        <form class="new-project-form">
-            <label for="project_title">Project Name:</label>
-            <input type="text" name="title" id="project_title" placeholder="Test Project">
+				<label for="due_date">Complete by:</label>
+				<input type="date" name="dueDate" id="due_date" />
 
-            <label for="project_description">Project Description:</label>
-            <textarea type="text" name="description" id="project_description" placeholder="Detailed project infromation..."></textarea>
-
-            <label for="due_date">Complete by:</label>
-            <input type="date" name="dueDate" id="due_date">
-
-            <fieldset class="priority-fieldset">
-                <legend>Project Urgency</legend>
-                <div>
-                    <input checked type="radio" name="priority" id="none" value="none" checked>
-                    <label for="none">None</label>
-                </div>
-                <div>
-                    <input type="radio" name="priority" id="low" value="low">
-                    <label for="low">Low</label>
-                </div>
-                <div>
-                    <input type="radio" name="priority" id="mid" value="mid">
-                    <label for="mid">Mid</label>
-                </div>
-                <div>
-                    <input type="radio" name="priority" id="high" value="high">
-                    <label for="high">High</label>
-                </div>
-                <div>
-                    <input type="radio" name="priority" id="urgent" value="urgent">
-                    <label for="urgent">Urgent</label>
-                </div>
-            </fieldset>
-            <button type="submit" id="save-project">Save Project</button>
-        </form>
-    </dialog>
-    <dialog id="add-new-task-modal">
-        <label for="task_details">Task Details:</label>
-        <input type="text" name="details" id="task_details" placeholder="Add task infromation...">
-        <button type="submit" id="save-task">Save Task</button>
-    </dialog>
-    
-</body>
+				<fieldset class="priority-fieldset">
+					<legend>Project Urgency</legend>
+					<div>
+						<input
+							checked
+							type="radio"
+							name="priority"
+							id="none"
+							value="none"
+							checked
+						/>
+						<label for="none">None</label>
+					</div>
+					<div>
+						<input
+							type="radio"
+							name="priority"
+							id="low"
+							value="low"
+						/>
+						<label for="low">Low</label>
+					</div>
+					<div>
+						<input
+							type="radio"
+							name="priority"
+							id="mid"
+							value="mid"
+						/>
+						<label for="mid">Mid</label>
+					</div>
+					<div>
+						<input
+							type="radio"
+							name="priority"
+							id="high"
+							value="high"
+						/>
+						<label for="high">High</label>
+					</div>
+					<div>
+						<input
+							type="radio"
+							name="priority"
+							id="urgent"
+							value="urgent"
+						/>
+						<label for="urgent">Urgent</label>
+					</div>
+				</fieldset>
+				<button type="submit" id="save-project">Save Project</button>
+			</form>
+		</dialog>
+		<dialog id="add-new-task-modal">
+			<label for="task_details">Task Details:</label>
+			<input
+				type="text"
+				name="details"
+				id="task_details"
+				placeholder="Add task infromation..."
+			/>
+			<button type="submit" id="save-task">Save Task</button>
+		</dialog>
+	</body>
 </html>

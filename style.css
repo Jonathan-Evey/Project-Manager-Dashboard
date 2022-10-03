@@ -57,6 +57,21 @@ section {
 	padding: 1rem 0.75rem;
 }
 
+.open-project-modal-btn {
+	cursor: pointer;
+	padding: 0.25rem 1rem 0rem;
+	font-size: 1.125rem;
+	font-weight: 700;
+	border: none;
+	border-bottom: 2px solid var(--clr-black);
+	background-color: transparent;
+}
+
+.open-project-modal-btn:hover {
+	color: var(--clr-dark);
+	border-bottom: 2px solid var(--clr-dark);
+}
+
 /*-------Project List Cards-------*/
 .projects-list-header {
 	display: flex;
