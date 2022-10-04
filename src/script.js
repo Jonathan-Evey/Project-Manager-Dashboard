@@ -76,6 +76,8 @@ const myProjects = (function () {
 
 	let selectedProject = [];
 
+	let projectToEdit;
+
 	let filterTasksBy = "all";
 
 	const createProject = (title, description, dueDate, priority) => {
@@ -115,28 +117,48 @@ const myProjects = (function () {
 
 	//---on form submit btn event - takes input value and pushes to projects array
 	function pushFormInputToProjects() {
-		let newProjectTitle = newProjectModal.titleInput.value;
-		if (newProjectTitle === null || newProjectTitle === "") {
-			return;
+		if (
+			projectToEdit &&
+			newProjectModal.saveBtn.dataset.projectId === projectToEdit[0].id
+		) {
+			const index = projects.findIndex((project) => {
+				return project.id === newProjectModal.saveBtn.dataset.projectId;
+			});
+
+			projects[index].title = newProjectModal.titleInput.value;
+			projects[index].description =
+				newProjectModal.descriptionInput.value;
+			projects[index].dueDate = newProjectModal.dueDateInput.value;
+			let newProjectPriorityInput = document.querySelector(
+				"input[type=radio][name=priority]:checked"
+			);
+			projects[index].priority = findPriorityValue(
+				newProjectPriorityInput.value
+			);
+		} else {
+			let newProjectTitle = newProjectModal.titleInput.value;
+			if (newProjectTitle === null || newProjectTitle === "") {
+				return;
+			}
+			let newProjectDescription = newProjectModal.descriptionInput.value;
+			let newProjectDueDate = newProjectModal.dueDateInput.value;
+
+			let newProjectPriorityInput = document.querySelector(
+				"input[type=radio][name=priority]:checked"
+			);
+			let newProjectPriority = findPriorityValue(
+				newProjectPriorityInput.value
+			);
+
+			let project = createProject(
+				newProjectTitle,
+				newProjectDescription,
+				newProjectDueDate,
+				newProjectPriority
+			);
+
+			projects.push(project);
 		}
-		let newProjectDescription = newProjectModal.descriptionInput.value;
-		let newProjectDueDate = newProjectModal.dueDateInput.value;
-
-		let newProjectPriorityInput = document.querySelector(
-			"input[type=radio][name=priority]:checked"
-		);
-		let newProjectPriority = findPriorityValue(
-			newProjectPriorityInput.value
-		);
-
-		let project = createProject(
-			newProjectTitle,
-			newProjectDescription,
-			newProjectDueDate,
-			newProjectPriority
-		);
-
-		projects.push(project);
 		resetProjectForm();
 		return;
 	}
@@ -219,6 +241,7 @@ const myProjects = (function () {
 	function projectHeaderEventListeners() {
 		projectsHeader.addEventListener("click", (e) => {
 			if (e.target.classList.contains("open-project-modal-btn")) {
+				newProjectModal.saveBtn.dataset.projectId = "";
 				return newProjectModal.theModal.showModal();
 			}
 			if (e.target.classList.contains("sort-by-most-btn")) {
@@ -255,6 +278,18 @@ const myProjects = (function () {
 					(project) => project.id !== e.target.dataset.projectId
 				);
 				render();
+			}
+			if (e.target.classList.contains("edit-project-btn")) {
+				projectToEdit = projects.filter((project) => {
+					if (project.id === e.target.dataset.projectId) {
+						return { ...project };
+					} else {
+						return;
+					}
+				});
+
+				console.log(projectToEdit);
+				openEditModel();
 			}
 			if (e.target.classList.contains("project-card")) {
 				selectedProject = projects.filter(
@@ -395,6 +430,8 @@ const myProjects = (function () {
 	}
 	//---Makes the list of projects
 	function renderProjects() {
+		console.log(sortedProjects);
+		//sortedProjects = [];
 		sortedProjects.forEach((project) => {
 			///////////////////Creates Cards for Each Project//////////////
 			let projectCardDiv = document.createElement("div");
@@ -428,6 +465,7 @@ const myProjects = (function () {
 			let editProjectBtn = document.createElement("button");
 			editProjectBtn.innerText = "Edit";
 			editProjectBtn.classList.add("edit-project-btn");
+			editProjectBtn.dataset.projectId = project.id;
 			projectBtnContainer.appendChild(editProjectBtn);
 
 			let deleteProjectBtn = document.createElement("button");
@@ -474,7 +512,8 @@ const myProjects = (function () {
 			projectDeadlineContainer.appendChild(selectedProjectDueDate);
 
 			let selectedProjectPriority = document.createElement("p");
-			selectedProjectPriority.innerText = "Priority: " + project.priority;
+			selectedProjectPriority.innerText =
+				"Priority: " + checkPriority(project.priority);
 			projectDeadlineContainer.appendChild(selectedProjectPriority);
 
 			let selectedProjectCardDescription = document.createElement("p");
@@ -661,6 +700,27 @@ const myProjects = (function () {
 		} else {
 			filterTasksBy = "all";
 		}
+	}
+
+	function openEditModel() {
+		newProjectModal.theModal.showModal();
+		newProjectModal.titleInput.value = projectToEdit[0].title;
+		newProjectModal.descriptionInput.value = projectToEdit[0].description;
+		newProjectModal.dueDateInput.value = projectToEdit[0].dueDate;
+		newProjectModal.radioInputs.forEach((input) => {
+			console.log(input);
+			console.log(checkPriority(projectToEdit[0].priority).toLowerCase());
+			console.log(input.id);
+			if (
+				checkPriority(projectToEdit[0].priority).toLowerCase() ===
+				input.id
+			) {
+				input.checked = true;
+			} else {
+				input.checked = false;
+			}
+		});
+		newProjectModal.saveBtn.dataset.projectId = projectToEdit[0].id;
 	}
 
 	return {
