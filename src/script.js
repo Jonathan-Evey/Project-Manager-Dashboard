@@ -123,7 +123,9 @@ const myProjects = (function () {
 		let newProjectPriorityInput = document.querySelector(
 			"input[type=radio][name=priority]:checked"
 		);
-		let newProjectPriority = newProjectPriorityInput.value;
+		let newProjectPriority = findPriorityValue(
+			newProjectPriorityInput.value
+		);
 
 		let project = createProject(
 			newProjectTitle,
@@ -179,6 +181,32 @@ const myProjects = (function () {
 		newTaskModal.theModal.close();
 		return;
 	}
+	function findPriorityValue(value) {
+		if (value === "low") {
+			return 1;
+		} else if (value === "mid") {
+			return 2;
+		} else if (value === "high") {
+			return 3;
+		} else if (value === "urgent") {
+			return 4;
+		} else {
+			return 0;
+		}
+	}
+	function checkPriority(value) {
+		if (value === 1) {
+			return "Low";
+		} else if (value === 2) {
+			return "Mid";
+		} else if (value === 3) {
+			return "High";
+		} else if (value === 4) {
+			return "Urgent";
+		} else {
+			return "None";
+		}
+	}
 
 	////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////
@@ -197,6 +225,22 @@ const myProjects = (function () {
 			}
 			if (e.target.classList.contains("sort-by-least-btn")) {
 				sortByLeastTaks();
+				render();
+			}
+			if (e.target.classList.contains("sort-by-highest-btn")) {
+				sortByPrioityHighest();
+				render();
+			}
+			if (e.target.classList.contains("sort-by-lowest-btn")) {
+				sortByPrioityLowest();
+				render();
+			}
+			if (e.target.classList.contains("sort-by-closest-btn")) {
+				sortByDateClosest();
+				render();
+			}
+			if (e.target.classList.contains("sort-by-farthest-btn")) {
+				sortByDateFarthest();
 				render();
 			}
 		});
@@ -307,10 +351,12 @@ const myProjects = (function () {
 		projectPriority.innerText = "Priority:";
 		sortByPriorityContainer.appendChild(projectPriority);
 		let projectSortByHighestPriorityBtn = document.createElement("button");
+		projectSortByHighestPriorityBtn.classList.add("sort-by-highest-btn");
 		projectSortByHighestPriorityBtn.innerText = "Highest";
 		sortByPriorityContainer.appendChild(projectSortByHighestPriorityBtn);
 		let projectSortByLeastPriorityBtn = document.createElement("button");
-		projectSortByLeastPriorityBtn.innerText = "Least";
+		projectSortByLeastPriorityBtn.classList.add("sort-by-lowest-btn");
+		projectSortByLeastPriorityBtn.innerText = "Lowest";
 		sortByPriorityContainer.appendChild(projectSortByLeastPriorityBtn);
 
 		let sortByDateContainer = document.createElement("div");
@@ -319,9 +365,11 @@ const myProjects = (function () {
 		projectDueDate.innerText = "Date:";
 		sortByDateContainer.appendChild(projectDueDate);
 		let projectSortByClosestDateBtn = document.createElement("button");
+		projectSortByClosestDateBtn.classList.add("sort-by-closest-btn");
 		projectSortByClosestDateBtn.innerText = "Closest";
 		sortByDateContainer.appendChild(projectSortByClosestDateBtn);
 		let projectSortByFarthestDateBtn = document.createElement("button");
+		projectSortByFarthestDateBtn.classList.add("sort-by-farthest-btn");
 		projectSortByFarthestDateBtn.innerText = "Farthest";
 		sortByDateContainer.appendChild(projectSortByFarthestDateBtn);
 
@@ -348,7 +396,9 @@ const myProjects = (function () {
 			projectCardDiv.appendChild(projectCardChecklist);
 
 			let projectCardPriority = document.createElement("p");
-			projectCardPriority.innerText = `Priority: ${project.priority}`;
+			projectCardPriority.innerText = `Priority: ${checkPriority(
+				project.priority
+			)}`;
 			projectCardDiv.appendChild(projectCardPriority);
 
 			let projectCardDueDate = document.createElement("p");
@@ -531,6 +581,47 @@ const myProjects = (function () {
 		sortedProjects = projectsByLeastTasks;
 		return;
 	}
+
+	function sortByPrioityHighest() {
+		let projectsByHighestPrioity = projects;
+		projectsByHighestPrioity.sort(function (a, b) {
+			return b.priority - a.priority;
+		});
+		sortedProjects = projectsByHighestPrioity;
+		return;
+	}
+	function sortByPrioityLowest() {
+		let projectsByLowestPrioity = projects;
+		projectsByLowestPrioity.sort(function (a, b) {
+			return a.priority - b.priority;
+		});
+		sortedProjects = projectsByLowestPrioity;
+		return;
+	}
+
+	function sortByDateClosest() {
+		let projectsByDateClosest = projects;
+		projectsByDateClosest.sort(function (a, b) {
+			return (
+				new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
+			);
+		});
+		sortedProjects = projectsByDateClosest;
+		return;
+	}
+
+	function sortByDateFarthest() {
+		let projectsByDateFarthest = projects;
+		projectsByDateFarthest.sort(function (a, b) {
+			return (
+				new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime()
+			);
+		});
+		sortedProjects = projectsByDateFarthest;
+		return;
+	}
+
+	function filterTasksByOpen() {}
 
 	return {
 		renderProjectsHeader,
