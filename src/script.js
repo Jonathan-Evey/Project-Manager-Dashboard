@@ -3,74 +3,71 @@ import findDOMElements from "./DOMElements.js";
 /*Your todo list should have projects or separate lists of todos. When a user first opens the app, there should be some sort of ‘default’ project to which all of their todos are put. Users should be able to create new projects and choose which project their todos go into. */
 const myProjects = (function () {
 	const LOCAL_STORAGE_PROJECTS_KEY = "myProjectManager.Project";
-	let projects =
-		JSON.parse(localStorage.getItem(LOCAL_STORAGE_PROJECTS_KEY)) || [];
+	let projects = JSON.parse(
+		localStorage.getItem(LOCAL_STORAGE_PROJECTS_KEY)
+	) || [
+		{
+			id: "123456789",
+			title: "Example Project",
+			description:
+				"This is an example project description. The goal of this project is to show what the project manager looks like with projects added to it.",
+			checklist: [
+				{
+					id: "12",
+					taskDetails: "Fill out example project infromation",
+					complete: true,
+				},
+				{
+					id: "15",
+					taskDetails: "Add multiple tasks to example project",
+					complete: true,
+				},
+				{
+					id: "16",
+					taskDetails: "Some task that is not done yet",
+					complete: false,
+				},
+			],
+			dueDate: "11/01/22",
+			priority: 3,
+		},
+		{
+			id: "987654321",
+			title: "Better Example Project",
+			description:
+				"This is an better example project description. The goal of this project is to show what the project manager looks like with projects added to it.", //user input from html form
+			checklist: [
+				{
+					id: "12",
+					taskDetails: "Finish adding example project infromation",
+					complete: false,
+				},
+				{
+					id: "15",
+					taskDetails: "Add multiple tasks to example project",
+					complete: true,
+				},
+				{
+					id: "16",
+					taskDetails: "Some task that is not done yet",
+					complete: false,
+				},
+				{
+					id: "18",
+					taskDetails: "Another task that is not done yet",
+					complete: false,
+				},
+			],
+			dueDate: "12/08/22",
+			priority: 4,
+		},
+	];
 
 	let projectCardContainer =
 		findDOMElements.HTML_ANCHORS.projectCardContainer;
 	let newProjectModal = findDOMElements.newProjectModal;
 	let newTaskModal = findDOMElements.newTaskModal;
 	let projectsHeader = findDOMElements.HTML_ANCHORS.projectsHeader;
-
-	/*let projects = [
-        {
-            id: "123456789", //pull time stamp to make a uniqe id
-            title: "Project With a Cool Name", //user input from html form
-            description: "A description of the project", //user input from html form
-            checklist: [
-                {
-                    id: "", //pull time stamp to make a uniqer id
-                    taskDetails: "", //user input from a html form
-                    complete: false, // user click to toggle 
-                }
-            ],
-            dueDate: "07/01/22", // user input
-            priority: "High", // user input (maybe do a background color gradiant to show priority level. also make a sort function to show tasks in that priority range)
-        },
-        {
-            id: "123456789", //pull time stamp to make a uniqe id
-            title: "Project With a Cool Name", //user input from html form
-            description: "A description of the project", //user input from html form
-            checklist: [
-                {
-                    id: "", //pull time stamp to make a uniqer id
-                    taskDetails: "", //user input from a html form
-                    complete: false, // user click to toggle 
-                },
-                {
-                    id: "", //pull time stamp to make a uniqer id
-                    taskDetails: "", //user input from a html form
-                    complete: false, // user click to toggle 
-                },
-                {
-                    id: "", //pull time stamp to make a uniqer id
-                    taskDetails: "", //user input from a html form
-                    complete: false, // user click to toggle 
-                }
-            ],
-            dueDate: "07/01/22", // user input
-            priority: "High", // user input (maybe do a background color gradiant to show priority level. also make a sort function to show tasks in that priority range)
-        },
-        {
-            id: "564654987", //pull time stamp to make a uniqe id
-            title: "Meh Project", //user input from html form
-            description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, iure perferendis ipsam possimus ipsum, amet id quas corrupti eum nam illum qui recusandae minus cupiditate assumenda in reprehenderit? Asperiores quos possimus eveniet voluptates ipsa aperiam nemo excepturi dignissimos accusamus distinctio?", //user input from html form
-            checklist: [
-                {
-                    id: "", //pull time stamp to make a uniqer id
-                    taskDetails: "some sample text", //user input from a html form
-                    complete: false, // user click to toggle 
-                },
-                {
-                    id: "", //pull time stamp to make a uniqer id
-                    taskDetails: "some more sample text", //user input from a html form
-                    complete: false, // user click to toggle 
-                }
-            ],
-            dueDate: "07/01/22", // user input
-            priority: "Low", // user input (maybe do a background color gradiant to show priority level. also make a sort function to show tasks in that priority range)
-        }
-    ]; */
 
 	let sortedProjects = projects;
 
@@ -110,7 +107,6 @@ const myProjects = (function () {
 
 	newProjectModal.saveBtn.addEventListener("click", () => {
 		pushFormInputToProjects();
-		console.log(projects);
 		render();
 		return;
 	});
@@ -200,7 +196,6 @@ const myProjects = (function () {
 			(project) => project.id === currentProjectId
 		);
 		currentProject.checklist.push(task);
-		console.log(projects);
 		return;
 	}
 	function resetTaskForm() {
@@ -278,9 +273,10 @@ const myProjects = (function () {
 	function projectCardEventListeners() {
 		projectCardContainer.addEventListener("click", (e) => {
 			if (e.target.classList.contains("delete-project-btn")) {
-				projects = projects.filter(
-					(project) => project.id !== e.target.dataset.projectId
-				);
+				const index = projects.findIndex((project) => {
+					return project.id === e.target.dataset.projectId;
+				});
+				projects.splice(index, 1);
 				render();
 			}
 			if (e.target.classList.contains("edit-project-btn")) {
@@ -291,8 +287,6 @@ const myProjects = (function () {
 						return;
 					}
 				});
-
-				console.log(projectToEdit);
 				openEditModel();
 			}
 			if (e.target.classList.contains("project-card")) {
@@ -434,8 +428,6 @@ const myProjects = (function () {
 	}
 	//---Makes the list of projects
 	function renderProjects() {
-		console.log(sortedProjects);
-		//sortedProjects = [];
 		sortedProjects.forEach((project) => {
 			///////////////////Creates Cards for Each Project//////////////
 			let projectCardDiv = document.createElement("div");
@@ -712,9 +704,6 @@ const myProjects = (function () {
 		newProjectModal.descriptionInput.value = projectToEdit[0].description;
 		newProjectModal.dueDateInput.value = projectToEdit[0].dueDate;
 		newProjectModal.radioInputs.forEach((input) => {
-			console.log(input);
-			console.log(checkPriority(projectToEdit[0].priority).toLowerCase());
-			console.log(input.id);
 			if (
 				checkPriority(projectToEdit[0].priority).toLowerCase() ===
 				input.id
