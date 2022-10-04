@@ -20,6 +20,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	height: 100vh;
+	font-family: "Libre Baskerville", serif;
 }
 
 header {
@@ -31,13 +32,24 @@ header {
 	z-index: 1;
 }
 
+h1 {
+	font-size: 3rem;
+}
+h2 {
+	font-size: 2.25rem;
+}
+
+p {
+	font-size: 1.125rem;
+}
+
 .header-title-container {
 	padding: 2rem;
 }
 
 .header-title-container h2 {
-	margin-left: 1.5rem;
-	margin-top: -0.45rem;
+	margin-left: 2.5rem;
+	margin-top: -0.75rem;
 }
 
 main {
@@ -207,9 +219,14 @@ fieldset {
 	pointer-events: none;
 }
 
+.project-card h3 {
+	font-size: 1.25rem;
+}
+
 .project-card p {
 	text-align: center;
 	margin: 0 auto;
+	font-size: 1.125rem;
 }
 
 .project-btn-container {
@@ -223,7 +240,7 @@ fieldset {
 	padding: 0.75rem;
 	background-color: transparent;
 	border: none;
-
+	font-weight: 700;
 	font-size: 1rem;
 }
 
@@ -279,10 +296,15 @@ fieldset {
 	z-index: 1;
 }
 
+.selected-project-header h3 {
+	font-size: 1.65rem;
+}
+
 .close-project-btn {
 	background: none;
 	padding: 0.5rem;
-	font-size: 0.9rem;
+	font-size: 1rem;
+	font-weight: 700;
 	color: var(--clr-white);
 	border: none;
 }
@@ -302,10 +324,17 @@ fieldset {
 	z-index: 1;
 }
 
+.project-description {
+	padding: 1rem;
+	font-size: 1.25rem;
+}
+
 .project-deadline-container {
 	display: flex;
 	justify-content: space-between;
-	padding-bottom: 1rem;
+	padding: 0.5rem 0.5rem 1rem 0.5rem;
+	font-weight: 700;
+	font-size: 1rem;
 }
 
 .selected-project-task-container {
@@ -335,6 +364,7 @@ fieldset {
 .task-filter-card {
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	font-weight: 700;
 	padding: 0 1.5rem;
 	margin-bottom: 0.5rem;
@@ -343,7 +373,7 @@ fieldset {
 .task-filter-card button {
 	background: none;
 	border: none;
-	font-size: 0.9rem;
+	font-size: 1rem;
 	font-weight: 700;
 	padding: 0.25rem 0.5rem;
 }
@@ -393,6 +423,7 @@ p.complete {
 	background: none;
 	border: none;
 	font-size: 1rem;
+	font-weight: 700;
 	padding: 0.25rem 0.5rem;
 	color: var(--clr-white);
 }
