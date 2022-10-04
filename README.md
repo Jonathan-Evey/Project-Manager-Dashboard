@@ -22,9 +22,11 @@ Interface minimum should have the following functionality:
 Main features include currently -
 
 -   Main landing shows all details on all current projects. Details shown are project title, total tasks, priority level, completion data, and a edit and delete button.
--   Sort projects by how many tasks are on each project.
+-   User can edit projects by selecting the edit button, and updating the data.
+-   Sort projects by how many tasks are on each project, project priority or project due date.
 -   User can select each project and it will show an overview of the project (added by the user at the time the project is added), and a list of all taskes for the selected project. Taskes are added by the use from the project overwiew page.
 -   User has the option to show tasks as completed with a checkbox, or delete tasks once completed.
+-   Filter Tasks by open/closed status.
 
 Execution -
 
@@ -35,10 +37,7 @@ Execution -
 
 Features still to implement -
 
--   Sort projects by priority.
--   Sort projects by date.
--   Ability to edit projects and tasks once they are added.
--   Filter Tasks by open/closed status.
+-   Ability to edit tasks once they are added.
 
 Site Demo -
 
