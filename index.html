@@ -32,13 +32,14 @@
 		</main>
 
 		<dialog class="add-new-project-modal" id="add-new-project-modal">
+			<h4>New Project Information</h4>
 			<form class="new-project-form">
 				<label for="project_title">Project Name:</label>
 				<input
 					type="text"
 					name="title"
 					id="project_title"
-					placeholder="Test Project"
+					placeholder="Example Title"
 				/>
 
 				<label for="project_description">Project Description:</label>
@@ -53,7 +54,7 @@
 				<input type="date" name="dueDate" id="due_date" />
 
 				<fieldset class="priority-fieldset">
-					<legend>Project Urgency</legend>
+					<legend>Project Urgency:</legend>
 					<div>
 						<input
 							checked
@@ -105,7 +106,8 @@
 				<button type="submit" id="save-project">Save Project</button>
 			</form>
 		</dialog>
-		<dialog id="add-new-task-modal">
+		<dialog class="add-new-task-modal" id="add-new-task-modal">
+			<h4>New Task Information</h4>
 			<label for="task_details">Task Details:</label>
 			<input
 				type="text"

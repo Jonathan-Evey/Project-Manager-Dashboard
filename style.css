@@ -68,8 +68,89 @@ section {
 }
 
 .open-project-modal-btn:hover {
-	color: var(--clr-dark);
-	border-bottom: 2px solid var(--clr-dark);
+	color: var(--clr-white);
+	border-bottom: 2px solid var(--clr-white);
+}
+
+.add-new-project-modal {
+	width: 25%;
+	height: 65%;
+}
+
+.add-new-project-modal,
+.add-new-task-modal {
+	border-radius: 3px 3px 3px 20px;
+	border: 2px solid var(--clr-darkest);
+	padding: 2.5rem 2rem;
+	background-color: var(--clr-dark);
+	color: var(--clr-white);
+}
+
+dialog::backdrop {
+	background-color: rgba(0, 0, 0, 0.85);
+}
+
+.add-new-project-modal h4,
+.add-new-task-modal h4 {
+	font-size: 1.5rem;
+	text-align: center;
+	padding-block-end: 2rem;
+}
+
+.add-new-project-modal input:not([type="radio"]),
+.add-new-project-modal textarea,
+.add-new-task-modal input {
+	margin-block-start: 0.35rem;
+	margin-block-end: 1rem;
+	padding: 0.25rem 0.5rem;
+	background-color: var(--clr-lightest);
+	border: none;
+	border-radius: 2px 2px 2px 15px;
+}
+
+.add-new-task-modal input {
+	margin-block-end: 2rem;
+}
+
+textarea {
+	flex-grow: 1;
+}
+
+.add-new-project-modal input::placeholder,
+.add-new-project-modal textarea::placeholder,
+.add-new-task-modal input::placeholder {
+	opacity: 0.85;
+	font-weight: 700;
+}
+
+fieldset {
+	display: flex;
+	justify-content: space-around;
+	padding-block: 0.5rem;
+	margin-block-end: 2rem;
+	border: none;
+}
+
+.add-new-project-modal button,
+.add-new-task-modal button {
+	cursor: pointer;
+	margin-inline: auto;
+	padding: 0.5rem;
+	width: 75%;
+	border: 2px solid var(--clr-lightest);
+	border-radius: 10px;
+	font-size: 1.125rem;
+	text-transform: uppercase;
+	font-weight: 700;
+	color: var(--clr-lightest);
+	background-color: transparent;
+}
+
+.add-new-project-modal button:hover,
+.add-new-task-modal button:hover {
+	border: 2px solid var(--clr-darkest);
+	color: var(--clr-darkest);
+	background-color: var(--clr-lightest);
 }
 
 /*-------Project List Cards-------*/
@@ -272,6 +353,14 @@ section {
 	color: var(--clr-white);
 }
 
+button.add-new-task-btn {
+	border-bottom: 2px solid var(--clr-black);
+}
+
+button.add-new-task-btn:hover {
+	border-bottom: 2px solid var(--clr-white);
+}
+
 .filter-tasks-btn-container,
 .task-options-container,
 .task-checkbox-conatiner {
@@ -321,9 +410,15 @@ dialog {
 	margin: auto;
 }
 
+dialog[open=""] {
+	display: flex;
+	flex-direction: column;
+}
+
 .new-project-form {
 	display: flex;
 	flex-direction: column;
+	flex-grow: 1;
 }
 
 .priority-fieldset {
