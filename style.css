@@ -473,6 +473,16 @@ dialog[open=""] {
 	}
 }
 
+@media (max-width: 975px) {
+	.project-header-sort-container {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	.open-project-modal-btn {
+		margin-block: auto;
+	}
+}
+
 @media (max-width: 600px) {
 	.add-new-project-modal {
 		width: 75%;
