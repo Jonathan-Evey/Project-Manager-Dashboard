@@ -28,7 +28,7 @@ const myProjects = (function () {
 					complete: false,
 				},
 			],
-			dueDate: "11/01/22",
+			dueDate: "2022-11-01",
 			priority: 3,
 		},
 		{
@@ -58,7 +58,7 @@ const myProjects = (function () {
 					complete: false,
 				},
 			],
-			dueDate: "12/08/22",
+			dueDate: "2022-12-08",
 			priority: 4,
 		},
 	];
