@@ -160,6 +160,7 @@ const myProjects = (function () {
 			projects.push(project);
 		}
 		resetProjectForm();
+		closeProjectModal();
 		return;
 	}
 	//---- resets project form to defalut
@@ -169,8 +170,10 @@ const myProjects = (function () {
 		newProjectModal.dueDateInput.value = null;
 		let defaultPriority = document.getElementById("none");
 		defaultPriority.checked = true;
-		newProjectModal.theModal.close();
 		return;
+	}
+	function closeProjectModal() {
+		return newProjectModal.theModal.close();
 	}
 
 	newTaskModal.theModal.addEventListener("submit", (e) => {
@@ -242,6 +245,7 @@ const myProjects = (function () {
 		projectsHeader.addEventListener("click", (e) => {
 			if (e.target.classList.contains("open-project-modal-btn")) {
 				newProjectModal.saveBtn.dataset.projectId = "";
+				resetProjectForm();
 				return newProjectModal.theModal.showModal();
 			}
 			if (e.target.classList.contains("sort-by-most-btn")) {
