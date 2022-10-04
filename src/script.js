@@ -76,6 +76,8 @@ const myProjects = (function () {
 
 	let selectedProject = [];
 
+	let filterTasksBy = "all";
+
 	const createProject = (title, description, dueDate, priority) => {
 		return {
 			id: Date.now().toString(),
@@ -261,6 +263,7 @@ const myProjects = (function () {
 				renderSelectedProject();
 			}
 			if (e.target.classList.contains("close-project-btn")) {
+				filterTasks("all");
 				clearElements(projectCardContainer);
 				render();
 			}
@@ -289,6 +292,18 @@ const myProjects = (function () {
 					);
 				});
 				save();
+				renderSelectedProject();
+			}
+			if (e.target.classList.contains("open-tasks-btn")) {
+				filterTasks("open");
+				renderSelectedProject();
+			}
+			if (e.target.classList.contains("closed-tasks-btn")) {
+				filterTasks("closed");
+				renderSelectedProject();
+			}
+			if (e.target.classList.contains("all-tasks-btn")) {
+				filterTasks("all");
 				renderSelectedProject();
 			}
 		});
@@ -486,14 +501,17 @@ const myProjects = (function () {
 			filterTasksBtnContainer.appendChild(filterTasksLable);
 
 			let allTasksBtn = document.createElement("button");
+			allTasksBtn.classList.add("all-tasks-btn");
 			allTasksBtn.innerText = "All";
 			filterTasksBtnContainer.appendChild(allTasksBtn);
 
 			let openTasksBtn = document.createElement("button");
+			openTasksBtn.classList.add("open-tasks-btn");
 			openTasksBtn.innerText = "Open";
 			filterTasksBtnContainer.appendChild(openTasksBtn);
 
 			let closedTasksBtn = document.createElement("button");
+			closedTasksBtn.classList.add("closed-tasks-btn");
 			closedTasksBtn.innerText = "Closed";
 			filterTasksBtnContainer.appendChild(closedTasksBtn);
 
@@ -550,10 +568,24 @@ const myProjects = (function () {
 					taskText.classList.add("complete");
 				}
 				selectedProjectChecklist.appendChild(taskText);
-
-				selectedProjectTaskContainer.appendChild(
-					selectedProjectChecklist
-				);
+				if (filterTasksBy === "all") {
+					selectedProjectTaskContainer.appendChild(
+						selectedProjectChecklist
+					);
+				}
+				if (
+					filterTasksBy === "not-completed" &&
+					task.complete === false
+				) {
+					selectedProjectTaskContainer.appendChild(
+						selectedProjectChecklist
+					);
+				}
+				if (filterTasksBy === "completed" && task.complete === true) {
+					selectedProjectTaskContainer.appendChild(
+						selectedProjectChecklist
+					);
+				}
 			});
 		});
 	}
@@ -621,12 +653,19 @@ const myProjects = (function () {
 		return;
 	}
 
-	function filterTasksByOpen() {}
+	function filterTasks(data) {
+		if (data === "open") {
+			filterTasksBy = "not-completed";
+		} else if (data === "closed") {
+			filterTasksBy = "completed";
+		} else {
+			filterTasksBy = "all";
+		}
+	}
 
 	return {
 		renderProjectsHeader,
 		renderProjects,
-		renderSelectedProject,
 		projectHeaderEventListeners,
 		projectCardEventListeners,
 	};
