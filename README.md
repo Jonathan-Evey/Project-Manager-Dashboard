@@ -41,4 +41,4 @@ Features still to implement -
 
 Site Demo -
 
-https://nighistheend.github.io/Project-Manager-Dashboard/
+https://jonathan-evey.github.io/Project-Manager-Dashboard/
